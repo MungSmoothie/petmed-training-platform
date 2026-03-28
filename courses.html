@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>课程中心 - 宠医通</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg-deep:#071E2E;--bg-primary:#0C4A6E;--bg-card:#0E5A7A;--bg-surface:rgba(255,255,255,0.06);--border:rgba(255,255,255,0.10);--border-hover:rgba(255,255,255,0.25);--accent:#0EA5E9;--accent-dark:#0369A1;--accent-glow:rgba(14,165,233,0.2);--gold:#FBBF24;--text-primary:#FFFFFF;--text-secondary:rgba(255,255,255,0.65);--text-muted:rgba(255,255,255,0.4);--font-display:'Noto Serif SC',serif;--font-body:'Noto Sans SC',sans-serif;--font-mono:'JetBrains Mono',monospace;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;--radius-sm:6px;--radius-md:10px;--radius-lg:16px;--radius-xl:24px;--shadow-card:0 4px 24px rgba(0,0,0,0.3);--shadow-hover:0 8px 40px rgba(0,0,0,0.4),0 0 0 1px rgba(14,165,233,0.2);--shadow-glow:0 0 24px rgba(14,165,233,0.25);--ease-out:cubic-bezier(0.16,1,0.3,1);--duration-fast:150ms;--duration-normal:250ms;--duration-slow:400ms}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg-deep);color:var(--text-primary);line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font-family:var(--font-body);cursor:pointer;border:none;outline:none}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+img{max-width:100%;display:block}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:100;height:72px;display:flex;align-items:center;padding:0 var(--space-8);background:rgba(2,28,18,0.8);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.topbar-inner{width:100%;max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:var(--space-3);font-family:var(--font-display);font-size:22px;font-weight:700}
+.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--accent),var(--accent-dark));border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:20px}
+.nav-links{display:flex;align-items:center;gap:var(--space-8)}
+.nav-links a{font-size:15px;font-weight:500;color:var(--text-secondary);transition:color var(--duration-fast) var(--ease-out)}
+.nav-links a:hover,.nav-links a.active{color:var(--text-primary)}
+.nav-actions{display:flex;align-items:center;gap:var(--space-4)}
+.btn-ghost{padding:var(--space-2) var(--space-5);border-radius:var(--radius-md);font-size:14px;font-weight:500;color:var(--text-primary);background:var(--bg-surface);border:1px solid var(--border);transition:all var(--duration-fast) var(--ease-out)}
+.btn-ghost:hover{background:rgba(255,255,255,0.1);border-color:var(--border-hover)}
+.btn-primary{padding:var(--space-2) var(--space-5);border-radius:var(--radius-md);font-size:14px;font-weight:600;color:var(--bg-deep);background:var(--accent);transition:all var(--duration-fast) var(--ease-out)}
+.btn-primary:hover{background:#0FD993;transform:translateY(-1px);box-shadow:var(--shadow-glow)}
+.page-header{padding-top:72px;background:linear-gradient(180deg,var(--bg-primary) 0%,var(--bg-deep) 100%);padding:var(--space-16) var(--space-8) var(--space-10)}
+.page-header-inner{max-width:1400px;margin:0 auto}
+.breadcrumb{font-size:13px;color:var(--text-muted);margin-bottom:var(--space-4)}
+.breadcrumb a{color:var(--text-secondary);transition:color var(--duration-fast)}
+.breadcrumb a:hover{color:var(--text-primary)}
+.breadcrumb span{margin:0 var(--space-2)}
+.page-title{font-family:var(--font-display);font-size:36px;font-weight:800;margin-bottom:var(--space-3)}
+.page-subtitle{font-size:16px;color:var(--text-secondary)}
+.filter-bar{background:var(--bg-card);border-bottom:1px solid var(--border);padding:var(--space-4) var(--space-8);position:sticky;top:72px;z-index:50}
+.filter-bar-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:var(--space-4);flex-wrap:wrap}
+.search-box{display:flex;align-items:center;gap:var(--space-2);background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:var(--space-2) var(--space-4);min-width:280px}
+.search-box input{background:none;border:none;color:var(--text-primary);font-size:14px;flex:1}
+.search-box input::placeholder{color:var(--text-muted)}
+.search-box span{color:var(--text-muted);font-size:16px}
+.filter-tags{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap}
+.filter-tag{padding:var(--space-1) var(--space-4);border-radius:100px;font-size:13px;font-weight:500;color:var(--text-secondary);background:var(--bg-surface);border:1px solid var(--border);cursor:pointer;transition:all var(--duration-fast) var(--ease-out)}
+.filter-tag:hover,.filter-tag.active{color:var(--bg-deep);background:var(--accent);border-color:var(--accent)}
+.filter-select{padding:var(--space-2) var(--space-4);border-radius:var(--radius-md);font-size:14px;color:var(--text-primary);background:var(--bg-surface);border:1px solid var(--border);cursor:pointer;appearance:none;padding-right:var(--space-8)}
+.main-layout{max-width:1400px;margin:0 auto;padding:var(--space-8);display:grid;grid-template-columns:280px 1fr;gap:var(--space-8)}
+.sidebar{position:sticky;top:140px;height:fit-content}
+.sidebar-section{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-5);margin-bottom:var(--space-5)}
+.sidebar-title{font-size:14px;font-weight:700;margin-bottom:var(--space-4);padding-bottom:var(--space-3);border-bottom:1px solid var(--border)}
+.sidebar-item{display:flex;align-items:center;justify-content:space-between;padding:var(--space-2) 0;cursor:pointer;transition:color var(--duration-fast)}
+.sidebar-item:hover{color:var(--accent)}
+.sidebar-item input[type="checkbox"]{accent-color:var(--accent)}
+.sidebar-item label{font-size:14px;cursor:pointer;flex:1;margin-left:var(--space-2)}
+.sidebar-item span{font-size:12px;color:var(--text-muted)}
+.price-range{display:flex;align-items:center;gap:var(--space-2)}
+.price-range input{width:80px;padding:var(--space-2);border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg-surface);color:var(--text-primary);font-size:13px;text-align:center}
+.price-range span{color:var(--text-muted)}
+.course-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-6)}
+.course-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;transition:all var(--duration-normal) var(--ease-out);display:block}
+.course-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover);border-color:var(--border-hover)}
+.course-card-thumb{position:relative;aspect-ratio:16/9;overflow:hidden}
+.course-card-thumb img{width:100%;height:100%;object-fit:cover;transition:transform var(--duration-slow) var(--ease-out)}
+.course-card:hover .course-card-thumb img{transform:scale(1.08)}
+.course-card-tag{position:absolute;top:var(--space-3);left:var(--space-3);padding:2px var(--space-2);background:var(--accent);border-radius:var(--radius-sm);font-size:11px;font-weight:600;color:var(--bg-deep)}
+.course-card-body{padding:var(--space-4)}
+.course-card-title{font-size:14px;font-weight:600;margin-bottom:var(--space-2);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.course-card-author{font-size:12px;color:var(--text-muted);margin-bottom:var(--space-3)}
+.course-card-footer{display:flex;align-items:center;justify-content:space-between}
+.course-card-rating{font-size:12px;color:var(--gold)}
+.course-card-price{font-family:var(--font-mono);font-size:15px;font-weight:600;color:var(--gold)}
+.pagination{display:flex;align-items:center;justify-content:center;gap:var(--space-2);padding:var(--space-10) 0}
+.page-btn{padding:var(--space-2) var(--space-4);border-radius:var(--radius-md);font-size:14px;background:var(--bg-surface);border:1px solid var(--border);color:var(--text-secondary);cursor:pointer;transition:all var(--duration-fast)}
+.page-btn:hover,.page-btn.active{background:var(--accent);border-color:var(--accent);color:var(--bg-deep)}
+.page-btn.disabled{opacity:0.4;cursor:not-allowed}
+.footer{background:#011A13;padding:var(--space-16) var(--space-8) var(--space-8)}
+.footer-inner{max-width:1400px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:var(--space-10);padding-bottom:var(--space-10);border-bottom:1px solid var(--border);margin-bottom:var(--space-8)}
+.footer-brand-desc{font-size:14px;color:var(--text-muted);margin-top:var(--space-4);line-height:1.7;max-width:280px}
+.footer-col-title{font-size:14px;font-weight:700;margin-bottom:var(--space-5)}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:var(--space-3)}
+.footer-links a{font-size:14px;color:var(--text-muted);transition:color var(--duration-fast)}
+.footer-links a:hover{color:var(--text-primary)}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between}
+.footer-copy{font-size:13px;color:var(--text-muted)}
+@media(max-width:1024px){.main-layout{grid-template-columns:1fr}.sidebar{display:none}.course-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* ===== Mobile Menu Overlay ===== */
+
+@media(max-width:768px){
+
+  /* Mobile nav visible */
+  .mobile-menu-btn{display:flex;align-items:center;justify-content:center}
+  .nav-links,.nav-actions{display:none !important}
+  .topbar{height:60px;padding:0 var(--space-4)}
+  /* Hero single column */
+  .hero{height:auto;min-height:auto}
+  .hero-bg{height:260px}
+  .hero-content{flex-direction:column;align-items:flex-start;padding:var(--space-6) var(--space-5);gap:var(--space-6)}
+  .hero-left{max-width:100%}
+  .hero-right{display:none}
+  .hero-title{font-size:28px;line-height:1.2}
+  .hero-subtitle{font-size:14px;max-width:100%}
+  .hero-actions{flex-direction:column;width:100%;gap:var(--space-3)}
+  .hero-actions a{width:100%}
+  .hero-actions button{width:100%;text-align:center}
+  .hero-stats{gap:var(--space-4);flex-wrap:wrap}
+  .hero-stat-num{font-size:22px}
+  .hero-badge{font-size:11px;padding:var(--space-1) var(--space-3)}
+  /* Stats 2x2 */
+  .stats-strip-inner{grid-template-columns:repeat(2,1fr);padding:var(--space-4)}
+  .stat-card{padding:var(--space-4) var(--space-3)}
+  .stat-num{font-size:24px}
+  /* Sections */
+  .section{padding:var(--space-8) var(--space-4)}
+  .section-title{font-size:18px}
+  /* Featured 1 col */
+  .featured-grid{grid-template-columns:1fr}
+  .featured-main{height:200px}
+  .featured-list{flex-direction:column;gap:var(--space-3)}
+  /* Course grid 1 col */
+  .course-grid{grid-template-columns:1fr;gap:var(--space-4)}
+  .course-card{height:auto}
+  /* VIP banner */
+  .vip-banner-inner{flex-direction:column;text-align:center;padding:var(--space-8) var(--space-5)}
+  .vip-banner-left{max-width:100%}
+  .vip-banner-right{margin-top:var(--space-6);width:100%}
+  .vip-banner-right button{width:100%}
+  .vip-banner-title{font-size:22px}
+  /* Footer */
+  .footer-inner{padding:var(--space-6) var(--space-4)}
+  .footer-top{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;gap:var(--space-3);text-align:center}
+  .hero-card{width:100%;max-width:100%;padding:var(--space-4)}
+  .featured-main-overlay{bottom:var(--space-4);left:var(--space-4);right:var(--space-4)}
+  .featured-main-title{font-size:15px}
+  .featured-main-price{font-size:16px}
+  /* Filter bar (courses page) */
+  .filter-bar-inner{flex-direction:column;align-items:stretch;gap:var(--space-3)}
+  .search-box{min-width:100%}
+
+  /* Filter bar */
+  .filter-bar-inner{flex-direction:column;align-items:stretch;gap:var(--space-3)}
+  .search-box{min-width:100%}
+
+  /* Show hamburger, hide desktop nav */
+  
+  .nav-links,.nav-actions{display:none !important}
+  
+  /* Topbar compact */
+  .topbar{height:60px;padding:0 var(--space-4)}
+  
+  /* Hero: single column */
+  .hero{height:auto;min-height:auto}
+  .hero-bg{height:260px}
+  .hero-content{
+    flex-direction:column;
+    align-items:flex-start;
+    padding:var(--space-6) var(--space-5);
+    gap:var(--space-6);
+  }
+  .hero-left{max-width:100%}
+  .hero-right{display:none}
+  .hero-title{font-size:28px;line-height:1.2}
+  .hero-subtitle{font-size:14px;max-width:100%}
+  .hero-actions{flex-direction:column;width:100%;gap:var(--space-3)}
+  .hero-actions a{width:100%}
+  .hero-actions button{width:100%;text-align:center}
+  .hero-stats{gap:var(--space-4);flex-wrap:wrap}
+  .hero-stat-num{font-size:22px}
+  .hero-badge{font-size:11px;padding:var(--space-1) var(--space-3)}
+  
+  /* Stats: 2x2 grid */
+  .stats-strip-inner{grid-template-columns:repeat(2,1fr);padding:var(--space-4)}
+  .stat-card{padding:var(--space-4) var(--space-3)}
+  .stat-num{font-size:24px}
+  
+  /* Sections */
+  .section{padding:var(--space-8) var(--space-4)}
+  .section-title{font-size:18px}
+  
+  /* Featured grid: 1 column */
+  .featured-grid{grid-template-columns:1fr}
+  .featured-main{height:200px}
+  .featured-list{display:flex;flex-direction:column;gap:var(--space-3)}
+  
+  /* Course grid: 1 column */
+  .course-grid{grid-template-columns:1fr;gap:var(--space-4)}
+  .course-card{height:auto}
+  
+  /* VIP banner */
+  .vip-banner-inner{flex-direction:column;text-align:center;padding:var(--space-8) var(--space-5)}
+  .vip-banner-left{max-width:100%}
+  .vip-banner-right{margin-top:var(--space-6);width:100%}
+  .vip-banner-right button{width:100%}
+  .vip-banner-title{font-size:22px}
+  
+  /* Footer */
+  .footer-inner{padding:var(--space-6) var(--space-4)}
+  .footer-top{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;gap:var(--space-3);text-align:center}
+  
+  /* Cards compact */
+  .hero-card{width:100%;max-width:100%;padding:var(--space-4)}
+  .featured-main-overlay{bottom:var(--space-4);left:var(--space-4);right:var(--space-4)}
+  .featured-main-title{font-size:15px}
+  .featured-main-price{font-size:16px}
+}
+
+@media(max-width:480px){
+  .topbar-inner{gap:var(--space-4)}
+  .logo span{display:none}
+  .hero-title{font-size:24px}
+  .hero-stat{width:calc(50% - var(--space-2))}
+  .course-grid{grid-template-columns:1fr}
+}
+
+/* ===== Mobile Menu ===== */
+.mobile-menu-btn{display:none;background:none;border:none;cursor:pointer;padding:8px;border-radius:var(--radius-sm)}
+.mobile-menu-btn:hover{background:var(--bg-surface)}
+.mobile-menu-btn svg{width:24px;height:24px;stroke:var(--text-primary);fill:none;stroke-width:2}
+.mobile-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;flex-direction:column}
+.mobile-overlay.open{display:flex;opacity:1}
+.mobile-nav{background:var(--bg-deep);border-bottom:1px solid var(--border);padding:var(--space-6);transform:translateY(-20px);transition:transform .25s}
+.mobile-overlay.open .mobile-nav{transform:translateY(0)}
+.mobile-nav a{display:block;padding:var(--space-4) 0;font-size:18px;font-weight:600;color:var(--text-secondary);border-bottom:1px solid var(--border)}
+.mobile-nav a:last-child{border-bottom:none}
+.mobile-nav a:hover,.mobile-nav a.active{color:var(--accent)}
+.mobile-nav-actions{display:flex;gap:var(--space-4);padding-top:var(--space-6)}
+.mobile-nav-actions button{flex:1;padding:var(--space-3);border-radius:var(--radius-md);font-size:14px;font-weight:600;border:none;cursor:pointer}
+
+</style>
+</head>
+<body>
+<header class="topbar"><div class="topbar-inner"><a href="index.html" class="logo"><div class="logo-icon">🏥</div><span>宠医通</span></a><nav class="nav-links"><a href="index.html">首页</a><a href="courses.html" class="active" class="active">课程中心</a><a href="live.html">直播课堂</a><a href="vip.html">会员中心</a><a href="about.html">关于我们</a></nav><button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="菜单"><svg viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg></button><div class="nav-actions"><button class="btn-ghost">登录</button><button class="btn-primary">立即注册</button></div></div></header>
+<div class="page-header"><div class="page-header-inner"><div class="breadcrumb"><a href="index.html">首页</a><span>›</span><span>课程中心</span></div><h1 class="page-title">课程中心</h1><p class="page-subtitle">共 520 门优质课程，涵盖超声、CT/MRI、设备操作等全品类</p></div></div>
+<div class="filter-bar"><div class="filter-bar-inner">
+<div class="search-box"><span>🔍</span><input type="text" placeholder="搜索课程名称、讲师..."></div>
+<div class="filter-tags">
+<span class="filter-tag active">全部</span>
+<span class="filter-tag">超声诊断</span>
+<span class="filter-tag">CT/MRI</span>
+<span class="filter-tag">X光影像</span>
+<span class="filter-tag">内镜技术</span>
+<span class="filter-tag">设备操作</span>
+<span class="filter-tag">报告书写</span>
+</div>
+<select class="filter-select"><option>综合排序</option><option>最新上架</option><option>价格最低</option><option>评分最高</option><option>学习最多</option></select>
+</div></div>
+<div class="main-layout">
+<aside class="sidebar">
+<div class="sidebar-section">
+<h3 class="sidebar-title">分类筛选</h3>
+<div class="sidebar-item"><input type="checkbox" id="c1" checked><label for="c1">超声诊断</label><span>186</span></div>
+<div class="sidebar-item"><input type="checkbox" id="c2"><label for="c2">CT/MRI</label><span>92</span></div>
+<div class="sidebar-item"><input type="checkbox" id="c3"><label for="c3">X光影像</label><span>78</span></div>
+<div class="sidebar-item"><input type="checkbox" id="c4"><label for="c4">内镜技术</label><span>54</span></div>
+<div class="sidebar-item"><input type="checkbox" id="c5"><label for="c5">设备操作</label><span>63</span></div>
+<div class="sidebar-item"><input type="checkbox" id="c6"><label for="c6">报告书写</label><span>47</span></div>
+</div>
+<div class="sidebar-section">
+<h3 class="sidebar-title">价格区间</h3>
+<div class="price-range"><input type="text" placeholder="最低"><span>-</span><input type="text" placeholder="最高"><button class="btn-primary" style="padding:4px 12px;font-size:12px">确定</button></div>
+</div>
+<div class="sidebar-section">
+<h3 class="sidebar-title">难度等级</h3>
+<div class="sidebar-item"><input type="checkbox" id="l1"><label for="l1">入门</label><span>120</span></div>
+<div class="sidebar-item"><input type="checkbox" id="l2"><label for="l2">进阶</label><span>245</span></div>
+<div class="sidebar-item"><input type="checkbox" id="l3"><label for="l3">高级</label><span>155</span></div>
+</div>
+</aside>
+<div class="content">
+<div class="course-grid">
+<a href="course-detail.html" class="course-card"><div class="course-card-thumb"><img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&q=80" alt=""><span class="course-card-tag">超声</span></div><div class="course-card-body"><h3 class="course-card-title">小动物腹部超声诊断实战班</h3><p class="course-card-author">李明华 · 520人在学</p><div class="course-card-footer"><span class="course-card-rating">⭐ 4.9</span><span class="course-card-price">¥2,980</span></div></div></a>
+<a href="course-detail.html" class="course-card"><div class="course-card-thumb"><img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=400&q=80" alt=""><span class="course-card-tag">CT/MRI</span></div><div class="course-card-body"><h3 class="course-card-title">CT/MRI 影像诊断进阶课程</h3><p class="course-card-author">张伟东 · 386人在学</p><div class="course-card-footer"><span class="course-card-rating">⭐ 4.9</span><span class="course-card-price">¥3,680</span></div></div></a>
+<a href="course-detail.html" class="course-card"><div class="course-card-thumb"><img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=400&q=80" alt=""><span class="course-card-tag">超声</span></div><div class="course-card-body"><h3 class="course-card-title">心脏超声理论与实操</h3><p class="course-card-author">王芳 · 298人在学</p><div class="course-card-footer"><span class="course-card-rating">⭐ 4.8</span><span class="course-card-price">¥2,580</span></div></div></a>
+<a href="course-detail.html" class="course-card"><div class="course-card-thumb"><img src="https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=400&q=80" alt=""><span class="course-card-tag">设备</span></div><div class="course-card-body"><h3 class="course-card-title">设备操作与维护基础课</h3><p class="course-card-author">陈志远 · 412人在学</p><div class="course-card-footer"><span class="course-card-rating">⭐ 4.7</span><span class="course-card-price">¥1,680</span></div></div></a>
+<a href="course-detail.html" class="course-card"><div class="course-card-thumb"><img src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=400&q=80" alt=""><span class="course-card-tag">报告</span></div><div class="course-card-body"><h3 class="course-card-title">影像报告书写规范与模板</h3><p class="course-card-author">刘婷 · 256人在学</p><div class="course-card-footer"><span class="course-card-rating">⭐ 4.9</span><span class="course-card-price">¥980</span></div></div></a>
+<a href="course-detail.html" class="course-card"><div class="course-card-thumb"><img src="https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?w=400&q=80" alt=""><span class="course-card-tag">X光</span></div><div class="course-card-body"><h3 class="course-card-title">X光影像判读基础课程</h3><p class="course-card-author">赵海涛 · 334人在学</p><div class="course-card-footer"><span class="course-card-rating">⭐ 4.8</span><span class="course-card-price">¥1,280</span></div></div></a>
+<a href="course-detail.html" class="course-card"><div class="course-card-thumb"><img src="https://images.unsplash.com/photo-1555255707-c07966088b7b?w=400&q=80" alt=""><span class="course-card-tag">内镜</span></div><div class="course-card-body"><h3 class="course-card-title">消化内镜诊断技术</h3><p class="course-card-author">周敏 · 189人在学</p><div class="course-card-footer"><span class="course-card-rating">⭐ 4.8</span><span class="course-card-price">¥2,180</span></div></div></a>
+<a href="course-detail.html" class="course-card"><div class="course-card-thumb"><img src="https://images.unsplash.com/photo-1579154204601-01588f351e67?w=400&q=80" alt=""><span class="course-card-tag">神经</span></div><div class="course-card-body"><h3 class="course-card-title">神经影像 MRI 高级班</h3><p class="course-card-author">吴晓峰 · 143人在学</p><div class="course-card-footer"><span class="course-card-rating">⭐ 4.9</span><span class="course-card-price">¥4,280</span></div></div></a>
+<a href="course-detail.html" class="course-card"><div class="course-card-thumb"><img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&q=80" alt=""><span class="course-card-tag">超声</span></div><div class="course-card-body"><h3 class="course-card-title">眼科超声诊断技术</h3><p class="course-card-author">林志明 · 198人在学</p><div class="course-card-footer"><span class="course-card-rating">⭐ 4.8</span><span class="course-card-price">¥1,880</span></div></div></a>
+</div>
+<div class="pagination">
+<button class="page-btn disabled">‹ 上一页</button>
+<button class="page-btn active">1</button>
+<button class="page-btn">2</button>
+<button class="page-btn">3</button>
+<button class="page-btn">4</button>
+<button class="page-btn">5</button>
+<button class="page-btn">...</button>
+<button class="page-btn">52</button>
+<button class="page-btn">下一页 ›</button>
+</div>
+</div>
+</div>
+<footer class="footer"><div class="footer-inner"><div class="footer-top"><div><a href="index.html" class="logo"><div class="logo-icon">🏥</div><span>宠医通</span></a><p class="footer-brand-desc">专业兽用医疗培训平台，汇聚顶尖专家，提供优质课程，助力兽医从业者技能提升。</p></div><div><h4 class="footer-col-title">课程中心</h4><ul class="footer-links"><li><a href="courses.html" class="active">全部课程</a></li><li><a href="courses.html" class="active">超声诊断</a></li><li><a href="courses.html" class="active">CT/MRI</a></li><li><a href="courses.html" class="active">设备操作</a></li></ul></div><div><h4 class="footer-col-title">关于我们</h4><ul class="footer-links"><li><a href="about.html">品牌介绍</a></li><li><a href="about.html">专家团队</a></li><li><a href="about.html">联系我们</a></li></ul></div><div><h4 class="footer-col-title">支持</h4><ul class="footer-links"><li><a href="vip.html">会员中心</a></li><li><a href="live.html">直播课堂</a></li><li><a href="#">帮助中心</a></li></ul></div></div><div class="footer-bottom"><p class="footer-copy">© 2026 宠医通 版权所有 | 京ICP备20260001号</p></div></div></footer>
+
+<!-- Mobile Menu -->
+<div class="mobile-overlay" id="mobileOverlay" onclick="e=>e.target===mobileOverlay&&toggleMobileMenu()">
+  <nav class="mobile-nav">
+    <a href="index.html" onclick="toggleMobileMenu()">首页</a>
+    <a href="courses.html" class="active" onclick="toggleMobileMenu()">课程中心</a>
+    <a href="live.html" onclick="toggleMobileMenu()">直播课堂</a>
+    <a href="vip.html" onclick="toggleMobileMenu()">会员中心</a>
+    <a href="about.html" onclick="toggleMobileMenu()">关于我们</a>
+    <div class="mobile-nav-actions">
+      <button class="btn-ghost" style="background:var(--bg-surface);border:1px solid var(--border);color:var(--text-primary)" onclick="showAuth('登录')">登录</button>
+      <button class="btn-primary" onclick="showAuth('注册')">立即注册</button>
+    </div>
+  </nav>
+</div>
+
+</body>
+</html>

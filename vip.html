@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>会员中心 - 宠医通</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg-deep:#022C22;--bg-primary:#064E3B;--bg-card:#065F46;--bg-surface:rgba(255,255,255,0.06);--border:rgba(255,255,255,0.10);--border-hover:rgba(255,255,255,0.25);--accent:#10B981;--accent-dark:#059669;--accent-glow:rgba(16,185,129,0.3);--gold:#F59E0B;--gold-light:#FCD34D;--text-primary:#FFFFFF;--text-secondary:rgba(255,255,255,0.65);--text-muted:rgba(255,255,255,0.4);--font-display:'Noto Serif SC',serif;--font-body:'Noto Sans SC',sans-serif;--font-mono:'JetBrains Mono',monospace;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;--space-20:80px;--radius-sm:6px;--radius-md:10px;--radius-lg:16px;--radius-xl:24px;--shadow-card:0 4px 24px rgba(0,0,0,0.3);--shadow-hover:0 8px 40px rgba(0,0,0,0.4),0 0 0 1px rgba(16,185,129,0.2);--shadow-glow:0 0 24px rgba(16,185,129,0.25);--shadow-gold:0 0 32px rgba(245,158,11,0.3);--ease-out:cubic-bezier(0.16,1,0.3,1);--ease-spring:cubic-bezier(0.34,1.56,0.64,1);--duration-fast:150ms;--duration-normal:250ms;--duration-slow:400ms}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg-deep);color:var(--text-primary);line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font-family:var(--font-body);cursor:pointer;border:none;outline:none}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+img{max-width:100%;display:block}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:100;height:72px;display:flex;align-items:center;padding:0 var(--space-8);background:rgba(2,28,18,0.8);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.topbar-inner{width:100%;max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:var(--space-3);font-family:var(--font-display);font-size:22px;font-weight:700}
+.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--accent),var(--accent-dark));border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:20px}
+.nav-links{display:flex;align-items:center;gap:var(--space-8)}
+.nav-links a{font-size:15px;font-weight:500;color:var(--text-secondary);transition:color var(--duration-fast)}
+.nav-links a:hover,.nav-links a.active{color:var(--text-primary)}
+.nav-actions{display:flex;align-items:center;gap:var(--space-4)}
+.btn-ghost{padding:var(--space-2) var(--space-5);border-radius:var(--radius-md);font-size:14px;font-weight:500;color:var(--text-primary);background:var(--bg-surface);border:1px solid var(--border);transition:all var(--duration-fast)}
+.btn-ghost:hover{background:rgba(255,255,255,0.1);border-color:var(--border-hover)}
+.btn-primary{padding:var(--space-2) var(--space-5);border-radius:var(--radius-md);font-size:14px;font-weight:600;color:var(--bg-deep);background:var(--accent);transition:all var(--duration-fast)}
+.btn-primary:hover{background:#0FD993;transform:translateY(-1px);box-shadow:var(--shadow-glow)}
+.hero{position:relative;padding:140px var(--space-8) var(--space-16);text-align:center;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(16,185,129,0.15) 0%,transparent 70%);pointer-events:none}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-5);background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.4);border-radius:100px;font-size:14px;font-weight:600;color:var(--gold);margin-bottom:var(--space-6)}
+.hero-title{font-family:var(--font-display);font-size:clamp(36px,5vw,60px);font-weight:800;margin-bottom:var(--space-5);line-height:1.1}
+.hero-title .gold{color:var(--gold)}
+.hero-subtitle{font-size:18px;color:var(--text-secondary);max-width:600px;margin:0 auto var(--space-10)}
+.hero-actions{display:flex;align-items:center;justify-content:center;gap:var(--space-4)}
+.btn-gold-hero{display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-4) var(--space-10);border-radius:var(--radius-lg);font-size:18px;font-weight:700;color:var(--bg-deep);background:linear-gradient(135deg,var(--gold),var(--gold-light));transition:all var(--duration-normal) var(--ease-out)}
+.btn-gold-hero:hover{transform:translateY(-2px);box-shadow:var(--shadow-gold)}
+.btn-outline-hero{display:inline-flex;align-items:center;padding:var(--space-4) var(--space-10);border-radius:var(--radius-lg);font-size:18px;font-weight:600;color:var(--text-primary);background:transparent;border:2px solid var(--border-hover);transition:all var(--duration-normal)}
+.btn-outline-hero:hover{background:var(--bg-surface);border-color:var(--gold)}
+.stats-bar{background:var(--bg-card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:var(--space-8)}
+.stats-bar-inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-6)}
+.stat-item{text-align:center}
+.stat-value{font-family:var(--font-mono);font-size:36px;font-weight:700;color:var(--gold)}
+.stat-desc{font-size:14px;color:var(--text-muted)}
+.plans-section{padding:var(--space-16) var(--space-8);max-width:1200px;margin:0 auto}
+.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-6)}
+.plan-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-xl);padding:var(--space-8);position:relative;transition:all var(--duration-normal) var(--ease-out)}
+.plan-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+.plan-card.popular{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),var(--shadow-gold)}
+.popular-tag{position:absolute;top:-14px;left:50%;transform:translateX(-50%);padding:var(--space-1) var(--space-5);background:linear-gradient(135deg,var(--gold),var(--gold-light));border-radius:100px;font-size:12px;font-weight:700;color:var(--bg-deep);white-space:nowrap}
+.plan-name{font-size:20px;font-weight:700;margin-bottom:var(--space-2)}
+.plan-desc{font-size:13px;color:var(--text-muted);margin-bottom:var(--space-6)}
+.plan-price{margin-bottom:var(--space-2)}
+.plan-price-num{font-family:var(--font-mono);font-size:48px;font-weight:700;color:var(--gold)}
+.plan-price-period{font-size:14px;color:var(--text-muted)}
+.plan-price-original{font-size:14px;color:var(--text-muted);text-decoration:line-through;margin-left:var(--space-2)}
+.plan-features{list-style:none;display:flex;flex-direction:column;gap:var(--space-3);margin-bottom:var(--space-8)}
+.plan-features li{display:flex;align-items:center;gap:var(--space-3);font-size:14px;color:var(--text-secondary)}
+.plan-features li::before{content:'✓';color:var(--accent);font-weight:700;flex-shrink:0}
+.plan-btn{width:100%;padding:var(--space-4);border-radius:var(--radius-lg);font-size:16px;font-weight:700;transition:all var(--duration-normal)}
+.plan-btn-outline{padding:var(--space-4);border-radius:var(--radius-lg);font-size:16px;font-weight:700;width:100%;background:transparent;border:2px solid var(--border-hover);color:var(--text-primary);transition:all var(--duration-normal)}
+.plan-btn-outline:hover{background:var(--bg-surface);border-color:var(--accent)}
+.plan-btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--bg-deep)}
+.plan-btn-gold:hover{transform:translateY(-2px);box-shadow:var(--shadow-gold)}
+.comparison-section{padding:var(--space-16) var(--space-8);max-width:1000px;margin:0 auto}
+.section-title{font-family:var(--font-display);font-size:32px;font-weight:700;text-align:center;margin-bottom:var(--space-12)}
+.gold{color:var(--gold)}
+.table-wrapper{overflow-x:auto}
+.comparison-table{width:100%;border-collapse:collapse}
+.comparison-table th{padding:var(--space-4);text-align:center;font-size:15px;font-weight:700;border-bottom:2px solid var(--border)}
+.comparison-table th:first-child{text-align:left}
+.comparison-table td{padding:var(--space-4);text-align:center;font-size:14px;border-bottom:1px solid var(--border);color:var(--text-secondary)}
+.comparison-table td:first-child{text-align:left;font-weight:500;color:var(--text-primary)}
+.comparison-table tr:hover td{background:rgba(255,255,255,0.02)}
+.check{color:var(--accent);font-size:18px;font-weight:700}
+.cross{color:var(--text-muted);font-size:16px}
+.reviews-section{padding:var(--space-16) var(--space-8);max-width:1200px;margin:0 auto}
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-6)}
+.review-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-xl);padding:var(--space-6);transition:all var(--duration-normal) var(--ease-out)}
+.review-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+.review-stars{font-size:16px;color:var(--gold);margin-bottom:var(--space-4)}
+.review-text{font-size:15px;color:var(--text-secondary);line-height:1.7;margin-bottom:var(--space-5)}
+.review-author{display:flex;align-items:center;gap:var(--space-3)}
+.review-avatar{width:40px;height:40px;border-radius:50%;background:var(--bg-surface);display:flex;align-items:center;justify-content:center;font-size:16px}
+.review-name{font-size:14px;font-weight:600}
+.review-title{font-size:12px;color:var(--text-muted)}
+.faq-section{padding:var(--space-16) var(--space-8);max-width:800px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-question{display:flex;align-items:center;justify-content:space-between;padding:var(--space-5) 0;cursor:pointer;font-size:16px;font-weight:600;transition:color var(--duration-fast)}
+.faq-question:hover{color:var(--accent)}
+.faq-arrow{font-size:18px;transition:transform var(--duration-fast)}
+.faq-item.open .faq-arrow{transform:rotate(180deg)}
+.faq-answer{max-height:0;overflow:hidden;transition:max-height var(--duration-normal) var(--ease-out)}
+.faq-item.open .faq-answer{max-height:300px}
+.faq-answer p{font-size:14px;color:var(--text-secondary);line-height:1.7;padding-bottom:var(--space-5)}
+.footer{background:#011A13;padding:var(--space-16) var(--space-8) var(--space-8)}
+.footer-inner{max-width:1400px;margin:0 auto}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between}
+.footer-copy{font-size:13px;color:var(--text-muted)}
+@media(max-width:1024px){.plans-grid{grid-template-columns:1fr;max-width:480px;margin:0 auto}.reviews-grid{grid-template-columns:1fr;max-width:480px;margin:0 auto}}
+.hero-actions{flex-direction:column}.stats-bar-inner{grid-template-columns:repeat(2,1fr)}.hero{padding:120px var(--space-5) var(--space-12)}}
+
+/* ===== Mobile Menu Overlay ===== */
+
+@media(max-width:768px){
+
+  /* Mobile nav visible */
+  .mobile-menu-btn{display:flex;align-items:center;justify-content:center}
+  .nav-links,.nav-actions{display:none !important}
+  .topbar{height:60px;padding:0 var(--space-4)}
+  /* Hero single column */
+  .hero{height:auto;min-height:auto}
+  .hero-bg{height:260px}
+  .hero-content{flex-direction:column;align-items:flex-start;padding:var(--space-6) var(--space-5);gap:var(--space-6)}
+  .hero-left{max-width:100%}
+  .hero-right{display:none}
+  .hero-title{font-size:28px;line-height:1.2}
+  .hero-subtitle{font-size:14px;max-width:100%}
+  .hero-actions{flex-direction:column;width:100%;gap:var(--space-3)}
+  .hero-actions a{width:100%}
+  .hero-actions button{width:100%;text-align:center}
+  .hero-stats{gap:var(--space-4);flex-wrap:wrap}
+  .hero-stat-num{font-size:22px}
+  .hero-badge{font-size:11px;padding:var(--space-1) var(--space-3)}
+  /* Stats 2x2 */
+  .stats-strip-inner{grid-template-columns:repeat(2,1fr);padding:var(--space-4)}
+  .stat-card{padding:var(--space-4) var(--space-3)}
+  .stat-num{font-size:24px}
+  /* Sections */
+  .section{padding:var(--space-8) var(--space-4)}
+  .section-title{font-size:18px}
+  /* Featured 1 col */
+  .featured-grid{grid-template-columns:1fr}
+  .featured-main{height:200px}
+  .featured-list{flex-direction:column;gap:var(--space-3)}
+  /* Course grid 1 col */
+  .course-grid{grid-template-columns:1fr;gap:var(--space-4)}
+  .course-card{height:auto}
+  /* VIP banner */
+  .vip-banner-inner{flex-direction:column;text-align:center;padding:var(--space-8) var(--space-5)}
+  .vip-banner-left{max-width:100%}
+  .vip-banner-right{margin-top:var(--space-6);width:100%}
+  .vip-banner-right button{width:100%}
+  .vip-banner-title{font-size:22px}
+  /* Footer */
+  .footer-inner{padding:var(--space-6) var(--space-4)}
+  .footer-top{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;gap:var(--space-3);text-align:center}
+  .hero-card{width:100%;max-width:100%;padding:var(--space-4)}
+  .featured-main-overlay{bottom:var(--space-4);left:var(--space-4);right:var(--space-4)}
+  .featured-main-title{font-size:15px}
+  .featured-main-price{font-size:16px}
+  /* Filter bar (courses page) */
+  .filter-bar-inner{flex-direction:column;align-items:stretch;gap:var(--space-3)}
+  .search-box{min-width:100%}
+
+  /* Show hamburger, hide desktop nav */
+  
+  .nav-links,.nav-actions{display:none !important}
+  
+  /* Topbar compact */
+  .topbar{height:60px;padding:0 var(--space-4)}
+  
+  /* Hero: single column */
+  .hero{height:auto;min-height:auto}
+  .hero-bg{height:260px}
+  .hero-content{
+    flex-direction:column;
+    align-items:flex-start;
+    padding:var(--space-6) var(--space-5);
+    gap:var(--space-6);
+  }
+  .hero-left{max-width:100%}
+  .hero-right{display:none}
+  .hero-title{font-size:28px;line-height:1.2}
+  .hero-subtitle{font-size:14px;max-width:100%}
+  .hero-actions{flex-direction:column;width:100%;gap:var(--space-3)}
+  .hero-actions a{width:100%}
+  .hero-actions button{width:100%;text-align:center}
+  .hero-stats{gap:var(--space-4);flex-wrap:wrap}
+  .hero-stat-num{font-size:22px}
+  .hero-badge{font-size:11px;padding:var(--space-1) var(--space-3)}
+  
+  /* Stats: 2x2 grid */
+  .stats-strip-inner{grid-template-columns:repeat(2,1fr);padding:var(--space-4)}
+  .stat-card{padding:var(--space-4) var(--space-3)}
+  .stat-num{font-size:24px}
+  
+  /* Sections */
+  .section{padding:var(--space-8) var(--space-4)}
+  .section-title{font-size:18px}
+  
+  /* Featured grid: 1 column */
+  .featured-grid{grid-template-columns:1fr}
+  .featured-main{height:200px}
+  .featured-list{display:flex;flex-direction:column;gap:var(--space-3)}
+  
+  /* Course grid: 1 column */
+  .course-grid{grid-template-columns:1fr;gap:var(--space-4)}
+  .course-card{height:auto}
+  
+  /* VIP banner */
+  .vip-banner-inner{flex-direction:column;text-align:center;padding:var(--space-8) var(--space-5)}
+  .vip-banner-left{max-width:100%}
+  .vip-banner-right{margin-top:var(--space-6);width:100%}
+  .vip-banner-right button{width:100%}
+  .vip-banner-title{font-size:22px}
+  
+  /* Footer */
+  .footer-inner{padding:var(--space-6) var(--space-4)}
+  .footer-top{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;gap:var(--space-3);text-align:center}
+  
+  /* Cards compact */
+  .hero-card{width:100%;max-width:100%;padding:var(--space-4)}
+  .featured-main-overlay{bottom:var(--space-4);left:var(--space-4);right:var(--space-4)}
+  .featured-main-title{font-size:15px}
+  .featured-main-price{font-size:16px}
+}
+
+@media(max-width:480px){
+  .topbar-inner{gap:var(--space-4)}
+  .logo span{display:none}
+  .hero-title{font-size:24px}
+  .hero-stat{width:calc(50% - var(--space-2))}
+  .course-grid{grid-template-columns:1fr}
+}
+
+/* ===== Mobile Menu ===== */
+.mobile-menu-btn{display:none;background:none;border:none;cursor:pointer;padding:8px;border-radius:var(--radius-sm)}
+.mobile-menu-btn:hover{background:var(--bg-surface)}
+.mobile-menu-btn svg{width:24px;height:24px;stroke:var(--text-primary);fill:none;stroke-width:2}
+.mobile-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;flex-direction:column}
+.mobile-overlay.open{display:flex;opacity:1}
+.mobile-nav{background:var(--bg-deep);border-bottom:1px solid var(--border);padding:var(--space-6);transform:translateY(-20px);transition:transform .25s}
+.mobile-overlay.open .mobile-nav{transform:translateY(0)}
+.mobile-nav a{display:block;padding:var(--space-4) 0;font-size:18px;font-weight:600;color:var(--text-secondary);border-bottom:1px solid var(--border)}
+.mobile-nav a:last-child{border-bottom:none}
+.mobile-nav a:hover,.mobile-nav a.active{color:var(--accent)}
+.mobile-nav-actions{display:flex;gap:var(--space-4);padding-top:var(--space-6)}
+.mobile-nav-actions button{flex:1;padding:var(--space-3);border-radius:var(--radius-md);font-size:14px;font-weight:600;border:none;cursor:pointer}
+
+</style>
+</head>
+<body>
+<header class="topbar"><div class="topbar-inner"><a href="index.html" class="logo"><div class="logo-icon">🏥</div><span>宠医通</span></a><nav class="nav-links"><a href="index.html">首页</a><a href="courses.html">课程中心</a><a href="live.html">直播课堂</a><a href="vip.html" class="active" class="active">会员中心</a><a href="about.html">关于我们</a></nav><button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="菜单"><svg viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg></button><div class="nav-actions"><button class="btn-ghost">登录</button><button class="btn-primary">立即注册</button></div></div></header>
+<section class="hero">
+<div class="hero-eyebrow">👑 开通宠医通会员</div>
+<h1 class="hero-title">解锁全部<span class="gold">500+</span>优质课程</h1>
+<p class="hero-subtitle">年费会员专享：全部课程免费学、直播优先参与、专家答疑特权。一次投资，全方位提升专业技能。</p>
+<div class="hero-actions">
+<button class="btn-gold-hero">立即开通会员 →</button>
+<button class="btn-outline-hero">了解更多</button>
+</div>
+</section>
+<section class="stats-bar">
+<div class="stats-bar-inner">
+<div class="stat-item"><div class="stat-value">520+</div><div class="stat-desc">精品课程</div></div>
+<div class="stat-item"><div class="stat-value">50,000+</div><div class="stat-desc">会员学员</div></div>
+<div class="stat-item"><div class="stat-value">200+</div><div class="stat-desc">权威专家</div></div>
+<div class="stat-item"><div class="stat-value">98%</div><div class="stat-desc">续费率</div></div>
+</div>
+</section>
+<section class="plans-section">
+<div class="plans-grid">
+<div class="plan-card">
+<div class="plan-name">月卡会员</div>
+<div class="plan-desc">适合短期学习需求</div>
+<div class="plan-price"><span class="plan-price-num">¥99</span><span class="plan-price-period">/月</span></div>
+<ul class="plan-features">
+<li>全部课程免费学习</li>
+<li>直播优先参与权</li>
+<li>学员答疑群</li>
+<li>专属学习进度追踪</li>
+</ul>
+<button class="plan-btn plan-btn-outline">立即购买</button>
+</div>
+<div class="plan-card popular">
+<div class="popular-tag">⭐ 最受欢迎</div>
+<div class="plan-name">年费会员</div>
+<div class="plan-desc">最适合长期学习者</div>
+<div class="plan-price"><span class="plan-price-num">¥699</span><span class="plan-price-period">/年</span><span class="plan-price-original">¥1,188</span></div>
+<ul class="plan-features">
+<li>全部 500+ 课程免费学</li>
+<li>直播优先参与 + 回放</li>
+<li>专家在线答疑特权</li>
+<li>优先获取新课程通知</li>
+<li>专属学习顾问服务</li>
+<li>会员专属线下活动</li>
+</ul>
+<button class="plan-btn plan-btn-gold">立即购买 立省 ¥489</button>
+</div>
+<div class="plan-card">
+<div class="plan-name">终身会员</div>
+<div class="plan-desc">一次购买，终身受益</div>
+<div class="plan-price"><span class="plan-price-num">¥2,999</span><span class="plan-price-period">/终身</span><span class="plan-price-original">¥5,000</span></div>
+<ul class="plan-features">
+<li>全部课程永久免费学</li>
+<li>未来所有新课程</li>
+<li>全年无限次专家答疑</li>
+<li>终身专属学习顾问</li>
+<li>优先参与线下培训</li>
+<li>宠医通认证兽医专家</li>
+</ul>
+<button class="plan-btn plan-btn-outline">立即购买</button>
+</div>
+</div>
+</section>
+<section class="comparison-section">
+<h2 class="section-title">会员<span class="gold">权益对比</span></h2>
+<div class="table-wrapper">
+<table class="comparison-table">
+<tr><th>权益内容</th><th>月卡</th><th>年卡</th><th>终身</th></tr>
+<tr><td>课程学习权限</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+<tr><td>课程数量</td><td>全部 500+</td><td>全部 500+</td><td>全部 + 未来新增</td></tr>
+<tr><td>直播优先参与</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+<tr><td>直播回放</td><td><span class="cross">—</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+<tr><td>专家在线答疑</td><td><span class="cross">—</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+<tr><td>学习顾问服务</td><td><span class="cross">—</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+<tr><td>线下活动优先权</td><td><span class="cross">—</span></td><td><span class="cross">—</span></td><td><span class="check">✓</span></td></tr>
+<tr><td>认证专家徽章</td><td><span class="cross">—</span></td><td><span class="cross">—</span></td><td><span class="check">✓</span></td></tr>
+</table>
+</div>
+</section>
+<section class="reviews-section">
+<h2 class="section-title">学员<span class="gold">真实评价</span></h2>
+<div class="reviews-grid">
+<div class="review-card">
+<div class="review-stars">⭐⭐⭐⭐⭐</div>
+<p class="review-text">"开通年卡后学习效率提升了很多！所有课程都能免费看，而且老师的答疑非常及时。强烈推荐给想系统学习的同行。"</p>
+<div class="review-author"><div class="review-avatar">张</div><div><div class="review-name">张建明</div><div class="review-title">某宠物医院 主治医师</div></div></div>
+</div>
+<div class="review-card">
+<div class="review-stars">⭐⭐⭐⭐⭐</div>
+<p class="review-text">"终身会员太值了！一次购买，以后所有新课程都能第一时间学习。还会推荐给科室同事。"</p>
+<div class="review-author"><div class="review-avatar">王</div><div><div class="review-name">王晓丽</div><div class="review-title">某农业大学 讲师</div></div></div>
+</div>
+<div class="review-card">
+<div class="review-stars">⭐⭐⭐⭐⭐</div>
+<p class="review-text">"作为一个工作了5年的兽医，一直想系统提升。宠医通的课程体系非常完整，老师讲得比线下培训还清楚。"</p>
+<div class="review-author"><div class="review-avatar">陈</div><div><div class="review-name">陈伟</div><div class="review-title">某连锁宠物医院 院长</div></div></div>
+</div>
+</div>
+</section>
+<section class="faq-section">
+<h2 class="section-title">常见<span class="gold">问题</span></h2>
+<div class="faq-item"><div class="faq-question"><span>会员可以开发票吗？</span><span class="faq-arrow">▼</span></div><div class="faq-answer"><p>可以。开具正规增值税普通发票或专用发票，请联系客服提供开票信息，财务部门会在3个工作日内开具并邮寄。</p></div></div>
+<div class="faq-item"><div class="faq-question"><span>课程有有效期吗？</span><span class="faq-arrow">▼</span></div><div class="faq-answer"><p>月卡会员课程有效期为1个月，年卡会员有效期为1年，终身会员课程永久有效。有效期内可反复观看学习。</p></div></div>
+<div class="faq-item"><div class="faq-question"><span>设备码可以兑换会员吗？</span><span class="faq-arrow">▼</span></div><div class="faq-answer"><p>设备码是线下培训课程的兑换凭证，不能直接兑换会员。但年卡和终身会员可享受更优惠的价格。</p></div></div>
+<div class="faq-item"><div class="faq-question"><span>支持退款吗？</span><span class="faq-arrow">▼</span></div><div class="faq-answer"><p>会员购买后7天内，如对课程服务不满意，可申请全额退款。超过7天，不支持退款，但可申请换课或延期服务。</p></div></div>
+<div class="faq-item"><div class="faq-question"><span>如何联系客服？</span><span class="faq-arrow">▼</span></div><div class="faq-answer"><p>您可以通过以下方式联系我们：微信客服（kexuntong01）、邮箱 support@kexuntong.com，或在工作日 9:00-18:00 拨打客服热线 400-123-4567。</p></div></div>
+</section>
+<footer class="footer"><div class="footer-inner"><div class="footer-bottom"><p class="footer-copy">© 2026 宠医通 版权所有 | 京ICP备20260001号</p></div></div></footer>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+document.querySelectorAll('.faq-question').forEach(function(q){q.addEventListener('click',function(){var item=q.parentElement;var wasOpen=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(function(i){i.classList.remove('open')});if(!wasOpen){item.classList.add('open')}})})});
+</script>
+
+<!-- Mobile Menu -->
+<div class="mobile-overlay" id="mobileOverlay" onclick="e=>e.target===mobileOverlay&&toggleMobileMenu()">
+  <nav class="mobile-nav">
+    <a href="index.html" onclick="toggleMobileMenu()">首页</a>
+    <a href="courses.html" onclick="toggleMobileMenu()">课程中心</a>
+    <a href="live.html" onclick="toggleMobileMenu()">直播课堂</a>
+    <a href="vip.html" class="active" onclick="toggleMobileMenu()">会员中心</a>
+    <a href="about.html" onclick="toggleMobileMenu()">关于我们</a>
+    <div class="mobile-nav-actions">
+      <button class="btn-ghost" style="background:var(--bg-surface);border:1px solid var(--border);color:var(--text-primary)" onclick="showAuth('登录')">登录</button>
+      <button class="btn-primary" onclick="showAuth('注册')">立即注册</button>
+    </div>
+  </nav>
+</div>
+
+</body>
+</html>
