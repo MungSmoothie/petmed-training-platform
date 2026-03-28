@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>直播课堂 - 宠医通</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg-deep:#071E2E;--bg-primary:#0C4A6E;--bg-card:#0E5A7A;
+  --bg-surface:rgba(255,255,255,0.06);--border:rgba(255,255,255,0.10);
+  --border-hover:rgba(255,255,255,0.25);--accent:#0EA5E9;
+  --accent-dark:#0369A1;--accent-glow:rgba(14,165,233,0.25);
+  --gold:#F59E0B;--red:#EF4444;
+  --text-primary:#FFFFFF;--text-secondary:rgba(255,255,255,0.65);
+  --text-muted:rgba(255,255,255,0.4);
+  --font-display:'Noto Serif SC',serif;--font-body:'Noto Sans SC',sans-serif;
+  --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;
+  --space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;
+  --radius-sm:6px;--radius-md:10px;--radius-lg:16px;--radius-xl:24px;
+  --shadow-card:0 4px 24px rgba(0,0,0,0.3);
+  --shadow-hover:0 8px 40px rgba(0,0,0,0.4),0 0 0 1px rgba(14,165,233,0.2);
+  --shadow-glow:0 0 24px rgba(14,165,233,0.25);
+  --ease-out:cubic-bezier(0.16,1,0.3,1);--ease-spring:cubic-bezier(0.34,1.56,0.64,1);
+  --duration-fast:150ms;--duration-normal:250ms;--duration-slow:400ms;
+}
+body{font-family:var(--font-body);background:var(--bg-deep);color:var(--text-primary)}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+button{font-family:inherit}
+
+/* Topbar */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:100;height:72px;display:flex;align-items:center;padding:0 var(--space-8);background:rgba(7,30,46,0.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.topbar-inner{width:100%;max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:var(--space-3);font-family:var(--font-display);font-size:22px;font-weight:700}
+.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--accent),var(--accent-dark));border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:20px}
+.nav-links{display:flex;align-items:center;gap:var(--space-8)}
+.nav-links a{font-size:15px;font-weight:500;color:var(--text-secondary);transition:color var(--duration-fast)}
+.nav-links a:hover,.nav-links a.active{color:var(--text-primary)}
+.nav-links a.active{border-bottom:2px solid var(--accent);padding-bottom:2px}
+.nav-actions{display:flex;align-items:center;gap:var(--space-4)}
+.btn-ghost{padding:var(--space-2) var(--space-5);border-radius:var(--radius-md);font-size:14px;font-weight:500;color:var(--text-primary);background:var(--bg-surface);border:1px solid var(--border);transition:all var(--duration-fast)}
+.btn-ghost:hover{background:rgba(255,255,255,0.1);border-color:var(--border-hover)}
+.btn-primary{padding:var(--space-2) var(--space-5);border-radius:var(--radius-md);font-size:14px;font-weight:600;color:var(--bg-deep);background:var(--accent);transition:all var(--duration-fast);border:none;cursor:pointer}
+.btn-primary:hover{background:#0FD993;transform:translateY(-1px);box-shadow:var(--shadow-glow)}
+
+/* Live topbar */
+.live-topbar{background:var(--bg-card);border-bottom:1px solid var(--border);padding:var(--space-4) var(--space-8);margin-top:72px}
+.live-topbar-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.live-status{display:flex;align-items:center;gap:var(--space-3)}
+.live-dot{width:8px;height:8px;background:var(--red);border-radius:50%;animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+.live-badge{padding:2px var(--space-3);background:var(--red);border-radius:4px;font-size:12px;font-weight:700;color:#fff}
+.live-title{font-size:16px;font-weight:700;margin-left:var(--space-4)}
+.live-viewers{font-size:13px;color:var(--text-muted)}
+.live-actions{display:flex;align-items:center;gap:var(--space-3)}
+.follow-btn,.share-btn{display:flex;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-4);border-radius:var(--radius-sm);font-size:13px;font-weight:600;border:none;cursor:pointer;transition:all var(--duration-fast)}
+.follow-btn{background:rgba(255,255,255,0.1);color:var(--text-primary);border:1px solid var(--border)}
+.follow-btn:hover{background:rgba(255,255,255,0.2)}
+.share-btn{background:var(--accent);color:var(--bg-deep)}
+.share-btn:hover{background:#0FD993}
+
+/* Live layout */
+.live-layout{max-width:1400px;margin:0 auto;padding:var(--space-6) var(--space-8);display:grid;grid-template-columns:1fr 360px;gap:var(--space-6);align-items:start}
+.live-player{position:relative;border-radius:var(--radius-lg);overflow:hidden;background:#000;aspect-ratio:16/9}
+.live-player img{width:100%;height:100%;object-fit:cover}
+.live-player-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;cursor:pointer;background:rgba(0,0,0,.25)}
+.play-circle{width:72px;height:72px;background:rgba(255,255,255,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px}
+.live-presenter{position:absolute;bottom:var(--space-4);left:var(--space-4);display:flex;align-items:center;gap:var(--space-3);background:rgba(0,0,0,.6);backdrop-filter:blur(10px);padding:var(--space-3) var(--space-4);border-radius:var(--radius-md)}
+.presenter-avatar{width:36px;height:36px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px}
+.presenter-name{font-size:13px;font-weight:700;color:#fff}
+
+/* Chat sidebar */
+.live-chat{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-xl);overflow:hidden;display:flex;flex-direction:column;height:480px}
+.chat-header{padding:var(--space-4) var(--space-5);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.chat-header-title{font-size:14px;font-weight:700}
+.chat-header-count{font-size:12px;color:var(--text-muted)}
+.chat-msgs{flex:1;overflow-y:auto;padding:var(--space-4);display:flex;flex-direction:column;gap:var(--space-3)}
+.chat-msg{display:flex;gap:var(--space-3);animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.chat-avatar{width:32px;height:32px;border-radius:50%;background:var(--bg-surface);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.chat-user{font-size:11px;font-weight:700;color:var(--accent);margin-bottom:2px}
+.chat-text{font-size:13px;color:var(--text-secondary);line-height:1.5}
+.chat-input-area{padding:var(--space-3);border-top:1px solid var(--border);display:flex;gap:var(--space-2)}
+.chat-input-area input{flex:1;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:var(--space-2) var(--space-3);color:#fff;font-size:12px;outline:none}
+.chat-input-area input::placeholder{color:var(--text-muted)}
+.chat-input-area button{background:var(--accent);color:var(--bg-deep);border:none;border-radius:var(--radius-sm);padding:var(--space-2) var(--space-4);font-size:12px;font-weight:600;cursor:pointer}
+
+/* Sections */
+.section{padding:var(--space-12) var(--space-8)}
+.section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:var(--space-6)}
+.section-title{font-size:22px;font-weight:800;color:var(--text-primary)}
+.section-more{font-size:13px;color:var(--text-muted);display:flex;align-items:center;gap:var(--space-2)}
+
+/* Upcoming grid */
+.upcoming-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-6)}
+.upcoming-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;transition:all var(--duration-normal) var(--ease-out)}
+.upcoming-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+.upcoming-thumb{position:relative;aspect-ratio:16/9}
+.upcoming-thumb img{width:100%;height:100%;object-fit:cover}
+.upcoming-live-badge{position:absolute;top:var(--space-3);left:var(--space-3);display:flex;align-items:center;gap:4px;background:var(--red);color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px}
+.upcoming-live-badge .dot{width:6px;height:6px;background:#fff;border-radius:50%;animation:blink 1s infinite}
+.upcoming-body{padding:var(--space-4)}
+.upcoming-title{font-size:14px;font-weight:700;color:var(--text-primary);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:var(--space-3);min-height:2.8em}
+.upcoming-meta{display:flex;justify-content:space-between;align-items:center}
+.upcoming-time{font-size:11px;font-weight:600;color:var(--accent);background:rgba(14,165,233,.15);padding:2px 8px;border-radius:4px}
+.upcoming-author{font-size:11px;color:var(--text-muted)}
+
+/* Recordings grid */
+.recordings-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-5)}
+.rec-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;transition:all var(--duration-normal) var(--ease-out)}
+.rec-card:hover{border-color:var(--accent);transform:translateY(-3px)}
+.rec-thumb{position:relative;aspect-ratio:16/9}
+.rec-thumb img{width:100%;height:100%;object-fit:cover}
+.rec-duration{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,.7);color:#fff;font-size:11px;padding:2px 6px;border-radius:3px}
+.rec-body{padding:var(--space-3)}
+.rec-title{font-size:13px;font-weight:600;color:var(--text-primary);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.6em;margin-bottom:var(--space-2)}
+.rec-meta{font-size:11px;color:var(--text-muted)}
+
+/* Guest section */
+.guest-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-6)}
+.guest-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-6);text-align:center;transition:all var(--duration-normal) var(--ease-out)}
+.guest-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+.guest-avatar{width:72px;height:72px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto var(--space-4)}
+.guest-name{font-size:15px;font-weight:700;margin-bottom:var(--space-1)}
+.guest-title{font-size:12px;color:var(--accent);margin-bottom:var(--space-3)}
+.guest-bio{font-size:12px;color:var(--text-muted);line-height:1.6}
+
+/* Footer */
+.footer{background:rgba(0,0,0,.3);padding:var(--space-16) var(--space-8) var(--space-8)}
+.footer-inner{max-width:1400px;margin:0 auto}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:var(--space-6);border-top:1px solid var(--border)}
+.footer-copy{font-size:12px;color:var(--text-muted)}
+.footer-links{display:flex;gap:var(--space-6)}
+.footer-links a{font-size:12px;color:var(--text-muted);transition:color var(--duration-fast)}
+.footer-links a:hover{color:var(--text-primary)}
+
+/* Mobile menu - base (hidden on desktop) */
+.mobile-menu-btn{display:none;background:none;border:none;cursor:pointer;padding:8px;border-radius:var(--radius-sm)}
+.mobile-menu-btn svg{width:24px;height:24px;stroke:var(--text-primary);fill:none;stroke-width:2}
+.mobile-overlay{display:none}
+
+/* Tablet 1024px */
+@media(max-width:1024px){
+  .live-layout{grid-template-columns:1fr}
+  .live-chat{height:400px}
+  .upcoming-grid{grid-template-columns:repeat(2,1fr)}
+  .recordings-grid{grid-template-columns:repeat(2,1fr)}
+  .guest-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+/* Mobile 768px */
+@media(max-width:768px){
+  .topbar{height:60px;padding:0 var(--space-4)}
+  .nav-links,.nav-actions{display:none !important}
+  .mobile-menu-btn{display:flex;align-items:center;justify-content:center}
+  .live-topbar{padding:var(--space-3) var(--space-4)}
+  .live-topbar-inner{flex-wrap:wrap;gap:var(--space-3)}
+  .live-layout{grid-template-columns:1fr;padding:var(--space-4)}
+  .live-chat{height:320px}
+  .section{padding:var(--space-8) var(--space-4)}
+  .section-header{flex-direction:column;align-items:flex-start;gap:var(--space-2)}
+  .upcoming-grid{grid-template-columns:1fr}
+  .recordings-grid{grid-template-columns:repeat(2,1fr);gap:var(--space-4)}
+  .guest-grid{grid-template-columns:repeat(2,1fr);gap:var(--space-4)}
+  .footer{padding:var(--space-8) var(--space-4) var(--space-4)}
+  .footer-bottom{flex-direction:column;gap:var(--space-4);text-align:center}
+  .footer-links{flex-wrap:wrap;justify-content:center;gap:var(--space-4)}
+}
+
+/* Mobile 480px */
+@media(max-width:480px){
+  .logo-icon{width:32px;height:32px;font-size:16px}
+  .live-chat{height:280px}
+  .recordings-grid{grid-template-columns:1fr}
+  .guest-grid{grid-template-columns:1fr}
+}
+</style>
+<body>
+<header class="topbar"><div class="topbar-inner"><a href="index.html" class="logo"><div class="logo-icon">🏥</div><span>宠医通</span></a><nav class="nav-links"><a href="index.html">首页</a><a href="courses.html">课程中心</a><a href="live.html" class="active" class="active">直播课堂</a><a href="vip.html">会员中心</a><a href="about.html">关于我们</a></nav><button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="菜单"><svg viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg></button><div class="nav-actions"><button class="btn-ghost">登录</button><button class="btn-primary">立即注册</button></div></div></header>
+<div class="live-hero">
+<div class="live-topbar"><div class="live-topbar-inner">
+<div class="live-status"><span class="live-dot"></span><span class="live-badge">LIVE</span><span class="live-title">小动物肾脏疾病超声诊断专题直播</span><span class="live-viewers">👁 12,847 人在看</span></div>
+<div class="live-actions"><button class="follow-btn">+ 关注</button><button class="share-btn">↗ 分享</button></div>
+</div></div>
+<div class="live-layout">
+<div class="live-video">
+<img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=1200&q=80" alt="">
+<div class="live-overlay"></div>
+<div class="live-presenter">
+<img class="presenter-avatar" src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=200&q=80" alt="">
+<div class="presenter-info"><div class="presenter-name">李明华 主任医师</div><div class="presenter-title">正在直播中</div></div>
+</div>
+</div>
+<div class="live-chat">
+<div class="chat-header"><span class="chat-title">实时弹幕</span><span class="chat-count">12,847 人</span></div>
+<div class="chat-messages">
+<div class="chat-msg"><div class="chat-avatar">张</div><div class="chat-bubble"><div class="chat-name">张建明</div><div class="chat-text">李老师讲得太好了！</div></div></div>
+<div class="chat-msg"><div class="chat-avatar">王</div><div class="chat-bubble"><div class="chat-name">王晓丽</div><div class="chat-text">请问肾囊肿多大需要手术？</div></div></div>
+<div class="chat-msg"><div class="chat-avatar">陈</div><div class="chat-bubble"><div class="chat-name">陈伟</div><div class="chat-text">这个病例很有代表性</div></div></div>
+<div class="chat-msg"><div class="chat-avatar">李</div><div class="chat-bubble"><div class="chat-name">李明华老师</div><div class="chat-text" style="color:var(--accent)">感谢大家，今天讲完会留15分钟答疑时间</div></div></div>
+<div class="chat-msg"><div class="chat-avatar">赵</div><div class="chat-bubble"><div class="chat-name">赵海</div><div class="chat-text">收藏了！</div></div></div>
+<div class="chat-msg"><div class="chat-avatar">周</div><div class="chat-bubble"><div class="chat-name">周敏</div><div class="chat-text">终于等到直播了</div></div></div>
+</div>
+<div class="chat-input-area">
+<input class="chat-input" placeholder="说点什么...">
+<button class="chat-send">发送</button>
+</div>
+</div>
+</div>
+</div>
+<section class="section"><div class="section-header"><h2 class="section-title">近期<span class="accent">直播预告</span></h2></div>
+<div class="upcoming-grid">
+<div class="upcoming-card">
+<div class="upcoming-thumb">
+<img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=500&q=80" alt="">
+<span class="upcoming-live-badge"><span style="width:6px;height:6px;background:#fff;border-radius:50%;animation:blink 1s infinite"></span> 即将开始</span>
+<span class="upcoming-date">03月30日 20:00</span>
+</div>
+<div class="upcoming-body">
+<h3 class="upcoming-title">心脏超声心动图评估专题</h3>
+<p class="upcoming-meta">王芳 副主任医师 · 预约 3,241 人</p>
+<button class="upcoming-btn">立即预约</button>
+</div>
+</div>
+<div class="upcoming-card">
+<div class="upcoming-thumb">
+<img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=500&q=80" alt="">
+<span class="upcoming-live-badge"><span style="width:6px;height:6px;background:#fff;border-radius:50%;animation:blink 1s infinite"></span> 即将开始</span>
+<span class="upcoming-date">04月02日 19:30</span>
+</div>
+<div class="upcoming-body">
+<h3 class="upcoming-title">MRI 神经影像读片实战班</h3>
+<p class="upcoming-meta">吴晓峰 主任医师 · 预约 2,156 人</p>
+<button class="upcoming-btn">立即预约</button>
+</div>
+</div>
+<div class="upcoming-card">
+<div class="upcoming-thumb">
+<img src="https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=500&q=80" alt="">
+<span class="upcoming-live-badge"><span style="width:6px;height:6px;background:#fff;border-radius:50%;animation:blink 1s infinite"></span> 即将开始</span>
+<span class="upcoming-date">04月05日 20:00</span>
+</div>
+<div class="upcoming-body">
+<h3 class="upcoming-title">影像设备日常维护与故障排除</h3>
+<p class="upcoming-meta">陈志远 工程师 · 预约 1,892 人</p>
+<button class="upcoming-btn">立即预约</button>
+</div>
+</div>
+</div>
+</section>
+<section class="section"><div class="section-header"><h2 class="section-title">往期<span class="accent">录播回放</span></h2></div>
+<div class="recordings-grid">
+<div class="rec-card"><div class="rec-thumb"><img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&q=80" alt=""><span class="rec-duration">02:15:30</span></div><div class="rec-body"><h3 class="rec-title">肝脏肿瘤超声诊断专题</h3><p class="rec-meta">李明华 · 8,234 次观看</p></div></div>
+<div class="rec-card"><div class="rec-thumb"><img src="https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?w=400&q=80" alt=""><span class="rec-duration">01:48:15</span></div><div class="rec-body"><h3 class="rec-title">X光胸腔读片基础</h3><p class="rec-meta">赵海涛 · 6,127 次观看</p></div></div>
+<div class="rec-card"><div class="rec-thumb"><img src="https://images.unsplash.com/photo-1555255707-c07966088b7b?w=400&q=80" alt=""><span class="rec-duration">02:02:45</span></div><div class="rec-body"><h3 class="rec-title">消化内镜操作演示</h3><p class="rec-meta">周敏 · 5,892 次观看</p></div></div>
+<div class="rec-card"><div class="rec-thumb"><img src="https://images.unsplash.com/photo-1579154204601-01588f351e67?w=400&q=80" alt=""><span class="rec-duration">01:55:20</span></div><div class="rec-body"><h3 class="rec-title">MRI 脑部疾病诊断</h3><p class="rec-meta">吴晓峰 · 4,567 次观看</p></div></div>
+</div>
+</section>
+<section class="section"><div class="section-header"><h2 class="section-title">本期<span class="accent">直播嘉宾</span></h2></div>
+<div class="guest-grid">
+<div class="guest-card">
+<img class="guest-avatar" src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=200&q=80" alt="">
+<div class="guest-name">李明华</div>
+<div class="guest-title">主任医师 · 主讲嘉宾</div>
+<p class="guest-bio">国内知名兽医影像学专家，20年临床经验</p>
+</div>
+<div class="guest-card">
+<img class="guest-avatar" src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=200&q=80" alt="">
+<div class="guest-name">王芳</div>
+<div class="guest-title">副主任医师 · 嘉宾</div>
+<p class="guest-bio">心脏超声专家，擅长各类心脏疾病诊断</p>
+</div>
+<div class="guest-card">
+<img class="guest-avatar" src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=200&q=80" alt="">
+<div class="guest-name">张伟东</div>
+<div class="guest-title">教授 · 嘉宾</div>
+<p class="guest-bio">CT/MRI 影像学权威，发表论文30余篇</p>
+</div>
+<div class="guest-card">
+<img class="guest-avatar" src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=200&q=80" alt="">
+<div class="guest-name">陈志远</div>
+<div class="guest-title">高级工程师 · 嘉宾</div>
+<p class="guest-bio">影像设备维修保养专家</p>
+</div>
+</div>
+</section>
+<footer class="footer"><div class="footer-inner"><div class="footer-bottom"><p class="footer-copy">© 2026 宠医通 版权所有 | 京ICP备20260001号</p></div></div></footer>
+
+<!-- Mobile Menu -->
+<div class="mobile-overlay" id="mobileOverlay" onclick="e=>e.target===mobileOverlay&&toggleMobileMenu()">
+  <nav class="mobile-nav">
+    <a href="index.html" onclick="toggleMobileMenu()">首页</a>
+    <a href="courses.html" onclick="toggleMobileMenu()">课程中心</a>
+    <a href="live.html" class="active" onclick="toggleMobileMenu()">直播课堂</a>
+    <a href="vip.html" onclick="toggleMobileMenu()">会员中心</a>
+    <a href="about.html" onclick="toggleMobileMenu()">关于我们</a>
+    <div class="mobile-nav-actions">
+      <button class="btn-ghost" style="background:var(--bg-surface);border:1px solid var(--border);color:var(--text-primary)" onclick="showAuth('登录')">登录</button>
+      <button class="btn-primary" onclick="showAuth('注册')">立即注册</button>
+    </div>
+  </nav>
+</div>
+
+</body>
+</body></html>

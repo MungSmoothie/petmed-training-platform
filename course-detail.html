@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小动物腹部超声诊断实战班 - 宠医通</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg-deep:#071E2E;--bg-primary:#0C4A6E;--bg-card:#0E5A7A;--bg-surface:rgba(255,255,255,0.06);--border:rgba(255,255,255,0.10);--border-hover:rgba(255,255,255,0.25);--accent:#0EA5E9;--accent-dark:#0369A1;--accent-glow:rgba(14,165,233,0.2);--gold:#FBBF24;--text-primary:#FFFFFF;--text-secondary:rgba(255,255,255,0.65);--text-muted:rgba(255,255,255,0.4);--font-display:'Noto Serif SC',serif;--font-body:'Noto Sans SC',sans-serif;--font-mono:'JetBrains Mono',monospace;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;--radius-sm:6px;--radius-md:10px;--radius-lg:16px;--radius-xl:24px;--shadow-card:0 4px 24px rgba(0,0,0,0.3);--shadow-hover:0 8px 40px rgba(0,0,0,0.4),0 0 0 1px rgba(14,165,233,0.2);--shadow-glow:0 0 24px rgba(14,165,233,0.25);--ease-out:cubic-bezier(0.16,1,0.3,1);--duration-fast:150ms;--duration-normal:250ms;--duration-slow:400ms}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg-deep);color:var(--text-primary);line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font-family:var(--font-body);cursor:pointer;border:none;outline:none}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+img{max-width:100%;display:block}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:100;height:72px;display:flex;align-items:center;padding:0 var(--space-8);background:rgba(2,28,18,0.8);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.topbar-inner{width:100%;max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:var(--space-3);font-family:var(--font-display);font-size:22px;font-weight:700}
+.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--accent),var(--accent-dark));border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:20px}
+.nav-links{display:flex;align-items:center;gap:var(--space-8)}
+.nav-links a{font-size:15px;font-weight:500;color:var(--text-secondary);transition:color var(--duration-fast)}
+.nav-links a:hover{color:var(--text-primary)}
+.nav-actions{display:flex;align-items:center;gap:var(--space-4)}
+.btn-ghost{padding:var(--space-2) var(--space-5);border-radius:var(--radius-md);font-size:14px;font-weight:500;color:var(--text-primary);background:var(--bg-surface);border:1px solid var(--border);transition:all var(--duration-fast)}
+.btn-ghost:hover{background:rgba(255,255,255,0.1);border-color:var(--border-hover)}
+.btn-primary{padding:var(--space-2) var(--space-5);border-radius:var(--radius-md);font-size:14px;font-weight:600;color:var(--bg-deep);background:var(--accent);transition:all var(--duration-fast)}
+.btn-primary:hover{background:#0FD993;transform:translateY(-1px);box-shadow:var(--shadow-glow)}
+.btn-gold{padding:var(--space-3) var(--space-6);border-radius:var(--radius-lg);font-size:16px;font-weight:700;color:var(--bg-deep);background:var(--gold);transition:all var(--duration-fast)}
+.btn-gold:hover{background:#FBBF24;transform:translateY(-2px);box-shadow:0 8px 32px rgba(245,158,11,0.4)}
+.breadcrumb{font-size:13px;color:var(--text-muted);padding:var(--space-16) var(--space-8) 0;max-width:1400px;margin:0 auto}
+.breadcrumb a{color:var(--text-secondary);transition:color var(--duration-fast)}
+.breadcrumb a:hover{color:var(--text-primary)}
+.breadcrumb span{margin:0 var(--space-2)}
+.detail-layout{max-width:1400px;margin:0 auto;padding:var(--space-8);display:grid;grid-template-columns:1fr 360px;gap:var(--space-8)}
+.detail-main{}
+.video-box{position:relative;border-radius:var(--radius-xl);overflow:hidden;aspect-ratio:16/9;background:var(--bg-card);margin-bottom:var(--space-6)}
+.video-box img{width:100%;height:100%;object-fit:cover}
+.video-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.3);cursor:pointer;transition:background var(--duration-fast)}
+.video-play:hover{background:rgba(0,0,0,0.5)}
+.play-btn{width:72px;height:72px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--bg-deep);transition:transform var(--duration-fast)}
+.video-play:hover .play-btn{transform:scale(1.1)}
+.tabs{display:flex;gap:var(--space-1);border-bottom:1px solid var(--border);margin-bottom:var(--space-6)}
+.tab{font-size:15px;font-weight:600;color:var(--text-secondary);padding:var(--space-3) var(--space-5);border-bottom:2px solid transparent;cursor:pointer;transition:all var(--duration-fast)}
+.tab:hover{color:var(--text-primary)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.intro-text{font-size:15px;color:var(--text-secondary);line-height:1.8}
+.intro-text p{margin-bottom:var(--space-4)}
+.chapter-item{display:flex;align-items:center;gap:var(--space-4);padding:var(--space-4);background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);margin-bottom:var(--space-3);cursor:pointer;transition:all var(--duration-fast)}
+.chapter-item:hover{background:rgba(255,255,255,0.05);border-color:var(--border-hover)}
+.chapter-num{width:36px;height:36px;background:var(--bg-surface);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--accent);flex-shrink:0}
+.chapter-item.unlocked .chapter-num{background:var(--accent);color:var(--bg-deep)}
+.chapter-item.locked .chapter-num{color:var(--text-muted)}
+.chapter-info{flex:1}
+.chapter-title{font-size:14px;font-weight:600;margin-bottom:2px}
+.chapter-meta{font-size:12px;color:var(--text-muted)}
+.chapter-duration{font-family:var(--font-mono);font-size:13px;color:var(--text-muted)}
+.instructor-card{display:flex;gap:var(--space-5);padding:var(--space-5);background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg)}
+.instructor-avatar{width:80px;height:80px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.instructor-info{flex:1}
+.instructor-name{font-size:18px;font-weight:700;margin-bottom:var(--space-1)}
+.instructor-title{font-size:13px;color:var(--accent);margin-bottom:var(--space-3)}
+.instructor-bio{font-size:14px;color:var(--text-secondary);line-height:1.6}
+.review-item{padding:var(--space-5);background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:var(--space-4)}
+.review-header{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3)}
+.review-avatar{width:40px;height:40px;border-radius:50%;background:var(--bg-surface);display:flex;align-items:center;justify-content:center;font-size:18px}
+.review-name{font-size:14px;font-weight:600}
+.review-rating{font-size:12px;color:var(--gold)}
+.review-text{font-size:14px;color:var(--text-secondary);line-height:1.6}
+.detail-sidebar{position:sticky;top:140px;height:fit-content}
+.sidebar-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-xl);padding:var(--space-6);margin-bottom:var(--space-5)}
+.sidebar-card-title{font-size:14px;font-weight:700;margin-bottom:var(--space-4);padding-bottom:var(--space-3);border-bottom:1px solid var(--border)}
+.price-display{font-family:var(--font-mono);font-size:36px;font-weight:700;color:var(--gold);margin-bottom:var(--space-4)}
+.price-original{font-size:14px;color:var(--text-muted);text-decoration:line-through;margin-left:var(--space-2)}
+.sidebar-actions{display:flex;flex-direction:column;gap:var(--space-3)}
+.stat-row{display:flex;justify-content:space-between;padding:var(--space-2) 0;border-bottom:1px solid var(--border)}
+.stat-row:last-child{border-bottom:none}
+.stat-row-label{font-size:14px;color:var(--text-secondary)}
+.stat-row-value{font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--accent)}
+.code-input{display:flex;gap:var(--space-2)}
+.code-input input{flex:1;padding:var(--space-3);border-radius:var(--radius-md);border:1px solid var(--border);background:var(--bg-surface);color:var(--text-primary);font-size:14px}
+.code-input button{padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);background:var(--accent);color:var(--bg-deep);font-size:14px;font-weight:600}
+.related-card{display:flex;gap:var(--space-3);padding:var(--space-3);border-radius:var(--radius-md);cursor:pointer;transition:all var(--duration-fast)}
+.related-card:hover{background:var(--bg-surface)}
+.related-thumb{width:80px;height:56px;border-radius:var(--radius-sm);object-fit:cover;flex-shrink:0}
+.related-info{flex:1;min-width:0}
+.related-title{font-size:13px;font-weight:600;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.related-price{font-family:var(--font-mono);font-size:13px;color:var(--gold)}
+.footer{background:#011A13;padding:var(--space-16) var(--space-8) var(--space-8)}
+.footer-inner{max-width:1400px;margin:0 auto}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between}
+.footer-copy{font-size:13px;color:var(--text-muted)}
+@media(max-width:1024px){.detail-layout{grid-template-columns:1fr}.detail-sidebar{position:static}}
+
+/* ===== Mobile Menu Overlay ===== */
+.mobile-menu-btn{
+  display:none;
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:8px;
+  border-radius:var(--radius-sm);
+  transition:background var(--duration-fast) var(--ease-out);
+}
+.mobile-menu-btn:hover{background:var(--bg-surface)}
+.mobile-menu-btn svg{width:24px;height:24px;stroke:var(--text-primary);fill:none;stroke-width:2}
+.mobile-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  z-index:200;
+  opacity:0;
+  transition:opacity var(--duration-normal) var(--ease-out);
+}
+.mobile-overlay.open{display:flex;flex-direction:column;opacity:1}
+.mobile-nav{
+  background:var(--bg-deep);
+  border-bottom:1px solid var(--border);
+  padding:var(--space-6);
+  transform:translateY(-20px);
+  transition:transform var(--duration-normal) var(--ease-out);
+}
+.mobile-overlay.open .mobile-nav{transform:translateY(0)}
+.mobile-nav a{
+  display:block;
+  padding:var(--space-4) 0;
+  font-size:18px;
+  font-weight:600;
+  color:var(--text-secondary);
+  border-bottom:1px solid var(--border);
+  transition:color var(--duration-fast);
+}
+.mobile-nav a:last-child{border-bottom:none}
+.mobile-nav a:hover,.mobile-nav a.active{color:var(--accent)}
+.mobile-nav-actions{display:flex;gap:var(--space-4);padding-top:var(--space-6)}
+.mobile-nav-actions button{flex:1;padding:var(--space-3);border-radius:var(--radius-md);font-size:14px;font-weight:600;border:none;cursor:pointer}
+
+
+@media(max-width:768px){
+  /* Show hamburger, hide desktop nav */
+  .mobile-menu-btn{display:flex;align-items:center;justify-content:center}
+  .nav-links,.nav-actions{display:none !important}
+  
+  /* Topbar compact */
+  .topbar{height:60px;padding:0 var(--space-4)}
+  
+  /* Hero: single column */
+  .hero{height:auto;min-height:auto}
+  .hero-bg{height:260px}
+  .hero-content{
+    flex-direction:column;
+    align-items:flex-start;
+    padding:var(--space-6) var(--space-5);
+    gap:var(--space-6);
+  }
+  .hero-left{max-width:100%}
+  .hero-right{display:none}
+  .hero-title{font-size:28px;line-height:1.2}
+  .hero-subtitle{font-size:14px;max-width:100%}
+  .hero-actions{flex-direction:column;width:100%;gap:var(--space-3)}
+  .hero-actions a{width:100%}
+  .hero-actions button{width:100%;text-align:center}
+  .hero-stats{gap:var(--space-4);flex-wrap:wrap}
+  .hero-stat-num{font-size:22px}
+  .hero-badge{font-size:11px;padding:var(--space-1) var(--space-3)}
+  
+  /* Stats: 2x2 grid */
+  .stats-strip-inner{grid-template-columns:repeat(2,1fr);padding:var(--space-4)}
+  .stat-card{padding:var(--space-4) var(--space-3)}
+  .stat-num{font-size:24px}
+  
+  /* Sections */
+  .section{padding:var(--space-8) var(--space-4)}
+  .section-title{font-size:18px}
+  
+  /* Featured grid: 1 column */
+  .featured-grid{grid-template-columns:1fr}
+  .featured-main{height:200px}
+  .featured-list{display:flex;flex-direction:column;gap:var(--space-3)}
+  
+  /* Course grid: 1 column */
+  .course-grid{grid-template-columns:1fr;gap:var(--space-4)}
+  .course-card{height:auto}
+  
+  /* VIP banner */
+  .vip-banner-inner{flex-direction:column;text-align:center;padding:var(--space-8) var(--space-5)}
+  .vip-banner-left{max-width:100%}
+  .vip-banner-right{margin-top:var(--space-6);width:100%}
+  .vip-banner-right button{width:100%}
+  .vip-banner-title{font-size:22px}
+  
+  /* Footer */
+  .footer-inner{padding:var(--space-6) var(--space-4)}
+  .footer-top{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;gap:var(--space-3);text-align:center}
+  
+  /* Cards compact */
+  .hero-card{width:100%;max-width:100%;padding:var(--space-4)}
+  .featured-main-overlay{bottom:var(--space-4);left:var(--space-4);right:var(--space-4)}
+  .featured-main-title{font-size:15px}
+  .featured-main-price{font-size:16px}
+}
+
+@media(max-width:480px){
+  .topbar-inner{gap:var(--space-4)}
+  .logo span{display:none}
+  .hero-title{font-size:24px}
+  .hero-stat{width:calc(50% - var(--space-2))}
+  .course-grid{grid-template-columns:1fr}
+}
+
+</style>
+</head>
+<body>
+<header class="topbar"><div class="topbar-inner"><a href="index.html" class="logo"><div class="logo-icon">🏥</div><span>宠医通</span></a><nav class="nav-links"><a href="index.html">首页</a><a href="courses.html" class="active">课程中心</a><a href="live.html">直播课堂</a><a href="vip.html">会员中心</a><a href="about.html">关于我们</a></nav><div class="nav-actions"><button class="btn-ghost">登录</button><button class="btn-primary">立即注册</button></div></div></header>
+<div class="breadcrumb" style="padding-top:88px"><a href="index.html">首页</a><span>›</span><a href="courses.html" class="active">课程中心</a><span>›</span><span>小动物腹部超声诊断实战班</span></div>
+<div class="detail-layout">
+<div class="detail-main">
+<div class="video-box">
+<img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=900&q=80" alt="">
+<div class="video-play"><div class="play-btn">▶</div></div>
+</div>
+<div class="tabs">
+<div class="tab active" data-tab="intro">课程介绍</div>
+<div class="tab" data-tab="outline">课程目录</div>
+<div class="tab" data-tab="instructor">讲师介绍</div>
+<div class="tab" data-tab="reviews">学员评价</div>
+</div>
+<div class="tab-content active" id="intro">
+<p class="intro-text">本课程系统讲解小动物腹部超声诊断的理论基础与实战技巧，涵盖肝脏、肾脏、脾脏、膀胱、胃肠道等主要脏器的扫查方法、正常声像图特征及常见病变识别。由国内知名兽医影像学专家李明华主任医师主讲，结合大量真实病例，帮助学员快速掌握腹部超声诊断的核心技能。</p>
+<p class="intro-text">课程特色：① 超高清视频教学，详细演示每个扫查切面；② 配套学员专属答疑群；③ 完成后颁发结业证书；④ 课程有效期2年，可反复观看学习。</p>
+</div>
+<div class="tab-content" id="outline">
+<div class="chapter-item unlocked"><div class="chapter-num">1</div><div class="chapter-info"><div class="chapter-title">超声基础理论与仪器调节</div><div class="chapter-meta">李明华 · 主任医师</div></div><span class="chapter-duration">45:30</span></div>
+<div class="chapter-item unlocked"><div class="chapter-num">2</div><div class="chapter-info"><div class="chapter-title">肝脏扫查方法与正常声像图</div><div class="chapter-meta">李明华 · 主任医师</div></div><span class="chapter-duration">52:15</span></div>
+<div class="chapter-item unlocked"><div class="chapter-num">3</div><div class="chapter-info"><div class="chapter-title">肾脏扫查与病变识别</div><div class="chapter-meta">李明华 · 主任医师</div></div><span class="chapter-duration">48:40</span></div>
+<div class="chapter-item unlocked"><div class="chapter-num">4</div><div class="chapter-info"><div class="chapter-title">脾脏与淋巴结扫查</div><div class="chapter-meta">李明华 · 主任医师</div></div><span class="chapter-duration">41:20</span></div>
+<div class="chapter-item locked"><div class="chapter-num">🔒</div><div class="chapter-info"><div class="chapter-title">膀胱与泌尿系统诊断</div><div class="chapter-meta">李明华 · 主任医师</div></div><span class="chapter-duration">55:10</span></div>
+<div class="chapter-item locked"><div class="chapter-num">🔒</div><div class="chapter-info"><div class="chapter-title">胃肠道扫查技术</div><div class="chapter-meta">李明华 · 主任医师</div></div><span class="chapter-duration">50:45</span></div>
+<div class="chapter-item locked"><div class="chapter-num">🔒</div><div class="chapter-info"><div class="chapter-title">实战病例分析与判读</div><div class="chapter-meta">李明华 · 主任医师</div></div><span class="chapter-duration">60:00</span></div>
+<div class="chapter-item locked"><div class="chapter-num">🔒</div><div class="chapter-info"><div class="chapter-title">超声报告书写规范</div><div class="chapter-meta">李明华 · 主任医师</div></div><span class="chapter-duration">35:20</span></div>
+</div>
+<div class="tab-content" id="instructor">
+<div class="instructor-card">
+<img class="instructor-avatar" src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=200&q=80" alt="">
+<div class="instructor-info">
+<div class="instructor-name">李明华</div>
+<div class="instructor-title">主任医师 · 硕士生导师</div>
+<p class="instructor-bio">国内知名兽医影像学专家，中华兽医学会影像学分会委员。从事兽医临床影像诊断工作20余年，擅长小动物腹部超声、心脏超声及CT/MRI诊断。已培养硕士研究生30余名，发表SCI论文15篇。</p>
+</div>
+</div>
+</div>
+<div class="tab-content" id="reviews">
+<div class="review-item"><div class="review-header"><div class="review-avatar">张</div><div><div class="review-name">张建明</div><div class="review-rating">⭐⭐⭐⭐⭐</div></div></div><p class="review-text">李老师讲得非常细致，每个切面都演示得很清楚。学了1个月，现在能独立完成肝脏和肾脏的扫查了，非常推荐！</p></div>
+<div class="review-item"><div class="review-header"><div class="review-avatar">王</div><div><div class="review-name">王晓丽</div><div class="review-rating">⭐⭐⭐⭐⭐</div></div></div><p class="review-text">课程内容非常实用，老师经验丰富，病例讲解很生动。配套的答疑群也很有帮助。</p></div>
+<div class="review-item"><div class="review-header"><div class="review-avatar">陈</div><div><div class="review-name">陈伟</div><div class="review-rating">⭐⭐⭐⭐</div></div></div><p class="review-text">系统学习了一遍，对腹部超声有了更深入的理解。建议有基础再报名效果更好。</p></div>
+</div>
+</div>
+<aside class="detail-sidebar">
+<div class="sidebar-card">
+<div class="price-display">¥2,980<span class="price-original">¥3,980</span></div>
+<div class="sidebar-actions">
+<a href="player.html"><button class="btn-gold" style="width:100%">立即购买学习</button></a>
+<a href="vip.html"><button class="btn-primary" style="width:100%">开通会员免费学</button></a>
+</div>
+</div>
+<div class="sidebar-card">
+<div class="sidebar-card-title">课程数据</div>
+<div class="stat-row"><span class="stat-row-label">课程时长</span><span class="stat-row-value">12章 / 28小时</span></div>
+<div class="stat-row"><span class="stat-row-label">学习人数</span><span class="stat-row-value">520人</span></div>
+<div class="stat-row"><span class="stat-row-label">评分</span><span class="stat-row-value">4.9 / 5.0</span></div>
+<div class="stat-row"><span class="stat-row-label">难度</span><span class="stat-row-value">进阶</span></div>
+<div class="stat-row"><span class="stat-row-label">有效期</span><span class="stat-row-value">2年</span></div>
+</div>
+<div class="sidebar-card">
+<div class="sidebar-card-title">设备码兑换</div>
+<p style="font-size:13px;color:var(--text-secondary);margin-bottom:var(--space-4)">如果您有设备码，可在下方输入兑换课程。</p>
+<div class="code-input">
+<input type="text" placeholder="请输入设备码">
+<button>兑换</button>
+</div>
+</div>
+<div class="sidebar-card">
+<div class="sidebar-card-title">相关课程</div>
+<a href="course-detail.html" class="related-card"><img class="related-thumb" src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=200&q=80" alt=""><div class="related-info"><div class="related-title">CT/MRI 影像诊断进阶课程</div><div class="related-price">¥3,680</div></div></a>
+<a href="course-detail.html" class="related-card"><img class="related-thumb" src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=200&q=80" alt=""><div class="related-info"><div class="related-title">心脏超声理论与实操</div><div class="related-price">¥2,580</div></div></a>
+<a href="course-detail.html" class="related-card"><img class="related-thumb" src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=200&q=80" alt=""><div class="related-info"><div class="related-title">影像报告书写规范与模板</div><div class="related-price">¥980</div></div></a>
+</div>
+</aside>
+</div>
+<footer class="footer"><div class="footer-inner"><div class="footer-bottom"><p class="footer-copy">© 2026 宠医通 版权所有 | 京ICP备20260001号</p></div></div></footer>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+document.querySelectorAll('.tab').forEach(function(tab){tab.addEventListener('click',function(){document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});this.classList.add('active');document.getElementById(this.dataset.tab).classList.add('active')})});
+document.querySelector('.video-play').addEventListener('click',function(){window.location.href='player.html'})});
+</script>
+
+<!-- Mobile Menu -->
+<div class="mobile-overlay" id="mobileOverlay" onclick="e=>e.target===mobileOverlay&&toggleMobileMenu()">
+  <nav class="mobile-nav">
+    <a href="index.html" onclick="toggleMobileMenu()">首页</a>
+    <a href="courses.html" class="active" onclick="toggleMobileMenu()">课程中心</a>
+    <a href="live.html" onclick="toggleMobileMenu()">直播课堂</a>
+    <a href="vip.html" onclick="toggleMobileMenu()">会员中心</a>
+    <a href="about.html" onclick="toggleMobileMenu()">关于我们</a>
+    <div class="mobile-nav-actions">
+      <button class="btn-ghost" style="background:var(--bg-surface);border:1px solid var(--border);color:var(--text-primary)" onclick="showAuth('登录')">登录</button>
+      <button class="btn-primary" onclick="showAuth('注册')">立即注册</button>
+    </div>
+  </nav>
+</div>
+
+</body>
+</html>

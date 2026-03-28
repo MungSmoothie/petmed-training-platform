@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>学习中心 - 宠医通</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg-deep:#071E2E;--bg-primary:#0C4A6E;--bg-card:#0E5A7A;--bg-surface:rgba(255,255,255,0.06);--border:rgba(255,255,255,0.10);--border-hover:rgba(255,255,255,0.25);--accent:#0EA5E9;--accent-dark:#0369A1;--accent-glow:rgba(14,165,233,0.2);--gold:#FBBF24;--text-primary:#FFFFFF;--text-secondary:rgba(255,255,255,0.65);--text-muted:rgba(255,255,255,0.4);--font-display:'Noto Serif SC',serif;--font-body:'Noto Sans SC',sans-serif;--font-mono:'JetBrains Mono',monospace;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;--radius-sm:6px;--radius-md:10px;--radius-lg:16px;--radius-xl:24px;--shadow-card:0 4px 24px rgba(0,0,0,0.3);--shadow-hover:0 8px 40px rgba(0,0,0,0.4),0 0 0 1px rgba(14,165,233,0.2);--ease-out:cubic-bezier(0.16,1,0.3,1);--duration-fast:150ms;--duration-normal:250ms;--duration-slow:400ms}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg-deep);color:var(--text-primary);line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font-family:var(--font-body);cursor:pointer;border:none;outline:none}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+img{max-width:100%;display:block}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:100;height:60px;display:flex;align-items:center;padding:0 var(--space-6);background:rgba(2,28,18,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.topbar-inner{width:100%;max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:var(--space-2);font-family:var(--font-display);font-size:18px;font-weight:700}
+.logo-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),var(--accent-dark));border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:16px}
+.topbar-center{flex:1;display:flex;align-items:center;justify-content:center}
+.course-title-bar{font-size:14px;font-weight:500;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:400px;text-align:center}
+.topbar-actions{display:flex;align-items:center;gap:var(--space-3)}
+.btn-sm{padding:var(--space-1) var(--space-4);border-radius:var(--radius-sm);font-size:13px;font-weight:500;color:var(--text-primary);background:var(--bg-surface);border:1px solid var(--border);transition:all var(--duration-fast)}
+.btn-sm:hover{background:rgba(255,255,255,0.1)}
+.player-layout{display:grid;grid-template-columns:1fr 360px;height:calc(100vh - 60px);margin-top:60px}
+.video-area{display:flex;flex-direction:column;background:#000}
+.video-container{position:relative;aspect-ratio:16/9;background:#000}
+.video-container video,.video-container img{width:100%;height:100%;object-fit:contain}
+.video-controls{background:rgba(0,0,0,0.8);padding:var(--space-3) var(--space-6);display:flex;align-items:center;gap:var(--space-4)}
+.play-pause{width:36px;height:36px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--bg-deep);flex-shrink:0}
+.progress-bar{flex:1;height:4px;background:rgba(255,255,255,0.2);border-radius:2px;cursor:pointer;position:relative}
+.progress-fill{height:100%;background:var(--accent);border-radius:2px;width:35%}
+.time-display{font-family:var(--font-mono);font-size:13px;color:var(--text-secondary);white-space:nowrap}
+.volume-btn{font-size:16px;color:var(--text-secondary)}
+.fullscreen-btn{font-size:16px;color:var(--text-secondary)}
+.video-info{padding:var(--space-5) var(--space-6);background:var(--bg-card)}
+.video-info-title{font-family:var(--font-display);font-size:20px;font-weight:700;margin-bottom:var(--space-2)}
+.video-info-meta{display:flex;align-items:center;gap:var(--space-4);font-size:13px;color:var(--text-muted)}
+.progress-tag{display:inline-flex;align-items:center;gap:var(--space-1);padding:2px var(--space-3);background:var(--accent-glow);border:1px solid var(--accent);border-radius:100px;font-size:11px;color:var(--accent)}
+.video-tabs{display:flex;border-bottom:1px solid var(--border);padding:0 var(--space-6)}
+.video-tab{font-size:14px;font-weight:600;color:var(--text-secondary);padding:var(--space-3) var(--space-5);border-bottom:2px solid transparent;cursor:pointer;transition:all var(--duration-fast)}
+.video-tab:hover{color:var(--text-primary)}
+.video-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.video-tab-content{display:none;padding:var(--space-5) var(--space-6);overflow-y:auto;max-height:400px}
+.video-tab-content.active{display:block}
+.chapter-list{}
+.chapter-header{display:flex;align-items:center;justify-content:space-between;padding:var(--space-3) var(--space-4);background:var(--bg-surface);border-radius:var(--radius-md);margin-bottom:var(--space-3);cursor:pointer}
+.chapter-header:hover{background:rgba(255,255,255,0.08)}
+.chapter-header-title{font-size:14px;font-weight:600}
+.chapter-header-meta{font-size:12px;color:var(--text-muted)}
+.chapter-section{display:flex;flex-direction:column;gap:var(--space-2)}
+.lesson-item{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);cursor:pointer;transition:all var(--duration-fast)}
+.lesson-item:hover{background:var(--bg-surface)}
+.lesson-item.current{background:var(--accent-glow);border:1px solid var(--accent)}
+.lesson-item.done .lesson-check{background:var(--accent);color:var(--bg-deep)}
+.lesson-check{width:24px;height:24px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.lesson-info{flex:1;min-width:0}
+.lesson-title{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lesson-duration{font-family:var(--font-mono);font-size:12px;color:var(--text-muted)}
+.sidebar-right{background:var(--bg-card);border-left:1px solid var(--border);display:flex;flex-direction:column}
+.sidebar-header{padding:var(--space-4) var(--space-5);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.sidebar-title{font-size:15px;font-weight:700}
+.sidebar-body{flex:1;overflow-y:auto;padding:var(--space-4)}
+.chapter-nav-item{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3);border-radius:var(--radius-md);cursor:pointer;transition:all var(--duration-fast);margin-bottom:var(--space-2)}
+.chapter-nav-item:hover{background:var(--bg-surface)}
+.chapter-nav-item.active{background:var(--accent-glow);border:1px solid var(--accent)}
+.chapter-nav-num{width:28px;height:28px;background:var(--bg-surface);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--accent);flex-shrink:0}
+.chapter-nav-item.active .chapter-nav-num{background:var(--accent);color:var(--bg-deep)}
+.chapter-nav-item.done .chapter-nav-num{background:var(--accent-dark);color:var(--bg-deep)}
+.chapter-nav-info{flex:1;min-width:0}
+.chapter-nav-title{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chapter-nav-time{font-size:11px;color:var(--text-muted)}
+.notes-area{min-height:120px;width:100%;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:var(--space-3);color:var(--text-primary);font-size:13px;resize:none;line-height:1.6}
+.notes-area::placeholder{color:var(--text-muted)}
+.notes-save{padding:var(--space-2) var(--space-4);border-radius:var(--radius-sm);background:var(--accent);color:var(--bg-deep);font-size:12px;font-weight:600;margin-top:var(--space-2)}
+@media(max-width:1024px){.player-layout{grid-template-columns:1fr}.sidebar-right{display:none}}
+
+/* ===== Mobile Menu Overlay ===== */
+.mobile-menu-btn{
+  display:none;
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:8px;
+  border-radius:var(--radius-sm);
+  transition:background var(--duration-fast) var(--ease-out);
+}
+.mobile-menu-btn:hover{background:var(--bg-surface)}
+.mobile-menu-btn svg{width:24px;height:24px;stroke:var(--text-primary);fill:none;stroke-width:2}
+.mobile-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  z-index:200;
+  opacity:0;
+  transition:opacity var(--duration-normal) var(--ease-out);
+}
+.mobile-overlay.open{display:flex;flex-direction:column;opacity:1}
+.mobile-nav{
+  background:var(--bg-deep);
+  border-bottom:1px solid var(--border);
+  padding:var(--space-6);
+  transform:translateY(-20px);
+  transition:transform var(--duration-normal) var(--ease-out);
+}
+.mobile-overlay.open .mobile-nav{transform:translateY(0)}
+.mobile-nav a{
+  display:block;
+  padding:var(--space-4) 0;
+  font-size:18px;
+  font-weight:600;
+  color:var(--text-secondary);
+  border-bottom:1px solid var(--border);
+  transition:color var(--duration-fast);
+}
+.mobile-nav a:last-child{border-bottom:none}
+.mobile-nav a:hover,.mobile-nav a.active{color:var(--accent)}
+.mobile-nav-actions{display:flex;gap:var(--space-4);padding-top:var(--space-6)}
+.mobile-nav-actions button{flex:1;padding:var(--space-3);border-radius:var(--radius-md);font-size:14px;font-weight:600;border:none;cursor:pointer}
+
+
+@media(max-width:768px){
+  /* Show hamburger, hide desktop nav */
+  .mobile-menu-btn{display:flex;align-items:center;justify-content:center}
+  .nav-links,.nav-actions{display:none !important}
+  
+  /* Topbar compact */
+  .topbar{height:60px;padding:0 var(--space-4)}
+  
+  /* Hero: single column */
+  .hero{height:auto;min-height:auto}
+  .hero-bg{height:260px}
+  .hero-content{
+    flex-direction:column;
+    align-items:flex-start;
+    padding:var(--space-6) var(--space-5);
+    gap:var(--space-6);
+  }
+  .hero-left{max-width:100%}
+  .hero-right{display:none}
+  .hero-title{font-size:28px;line-height:1.2}
+  .hero-subtitle{font-size:14px;max-width:100%}
+  .hero-actions{flex-direction:column;width:100%;gap:var(--space-3)}
+  .hero-actions a{width:100%}
+  .hero-actions button{width:100%;text-align:center}
+  .hero-stats{gap:var(--space-4);flex-wrap:wrap}
+  .hero-stat-num{font-size:22px}
+  .hero-badge{font-size:11px;padding:var(--space-1) var(--space-3)}
+  
+  /* Stats: 2x2 grid */
+  .stats-strip-inner{grid-template-columns:repeat(2,1fr);padding:var(--space-4)}
+  .stat-card{padding:var(--space-4) var(--space-3)}
+  .stat-num{font-size:24px}
+  
+  /* Sections */
+  .section{padding:var(--space-8) var(--space-4)}
+  .section-title{font-size:18px}
+  
+  /* Featured grid: 1 column */
+  .featured-grid{grid-template-columns:1fr}
+  .featured-main{height:200px}
+  .featured-list{display:flex;flex-direction:column;gap:var(--space-3)}
+  
+  /* Course grid: 1 column */
+  .course-grid{grid-template-columns:1fr;gap:var(--space-4)}
+  .course-card{height:auto}
+  
+  /* VIP banner */
+  .vip-banner-inner{flex-direction:column;text-align:center;padding:var(--space-8) var(--space-5)}
+  .vip-banner-left{max-width:100%}
+  .vip-banner-right{margin-top:var(--space-6);width:100%}
+  .vip-banner-right button{width:100%}
+  .vip-banner-title{font-size:22px}
+  
+  /* Footer */
+  .footer-inner{padding:var(--space-6) var(--space-4)}
+  .footer-top{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;gap:var(--space-3);text-align:center}
+  
+  /* Cards compact */
+  .hero-card{width:100%;max-width:100%;padding:var(--space-4)}
+  .featured-main-overlay{bottom:var(--space-4);left:var(--space-4);right:var(--space-4)}
+  .featured-main-title{font-size:15px}
+  .featured-main-price{font-size:16px}
+}
+
+@media(max-width:480px){
+  .topbar-inner{gap:var(--space-4)}
+  .logo span{display:none}
+  .hero-title{font-size:24px}
+  .hero-stat{width:calc(50% - var(--space-2))}
+  .course-grid{grid-template-columns:1fr}
+}
+
+</style>
+</head>
+<body>
+<header class="topbar"><div class="topbar-inner"><a href="index.html" class="logo"><div class="logo-icon">🏥</div><span>宠医通</span></a><div class="topbar-center"><div class="course-title-bar">小动物腹部超声诊断实战班 · 第3章 肾脏扫查与病变识别</div></div><div class="topbar-actions"><button class="btn-sm">📝 笔记</button><button class="btn-sm">⚙️ 设置</button><a href="course-detail.html"><button class="btn-sm">← 返回课程</button></a></div></div></header>
+<div class="player-layout">
+<div class="video-area">
+<div class="video-container">
+<img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=1200&q=80" alt="Video">
+<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.3)">
+<div class="play-pause" style="width:56px;height:56px;font-size:20px">▶</div>
+</div>
+</div>
+<div class="video-controls">
+<div class="play-pause">▶</div>
+<div class="progress-bar"><div class="progress-fill"></div></div>
+<div class="time-display">17:42 / 48:40</div>
+<div class="volume-btn">🔊</div>
+<div class="fullscreen-btn">⛶</div>
+</div>
+<div class="video-info">
+<h2 class="video-info-title">第3章 肾脏扫查与病变识别</h2>
+<div class="video-info-meta">
+<span>李明华 主任医师</span>
+<span>·</span>
+<span>学习进度 35%</span>
+<span class="progress-tag">▶ 正在学习</span>
+</div>
+</div>
+<div class="video-tabs">
+<div class="video-tab active" data-tab="outline">课程目录</div>
+<div class="video-tab" data-tab="notes">学习笔记</div>
+</div>
+<div class="video-tab-content active" id="outline">
+<div class="chapter-list">
+<div class="chapter-section">
+<div class="lesson-item done"><div class="lesson-check">✓</div><div class="lesson-info"><div class="lesson-title">3.1 肾脏解剖基础与扫查准备</div><div class="lesson-duration">10:25</div></div></div>
+<div class="lesson-item done"><div class="lesson-check">✓</div><div class="lesson-info"><div class="lesson-title">3.2 正常肾脏声像图特征</div><div class="lesson-duration">15:30</div></div></div>
+<div class="lesson-item current"><div class="lesson-check" style="border-color:var(--accent)"></div><div class="lesson-info"><div class="lesson-title">3.3 肾脏囊肿与肿瘤识别</div><div class="lesson-duration">12:47</div></div></div>
+<div class="lesson-item"><div class="lesson-check"></div><div class="lesson-info"><div class="lesson-title">3.4 肾积水与尿路梗阻</div><div class="lesson-duration">14:20</div></div></div>
+<div class="lesson-item"><div class="lesson-check"></div><div class="lesson-info"><div class="lesson-title">3.5 肾脏测量与报告书写</div><div class="lesson-duration">16:38</div></div></div>
+</div>
+</div>
+<div class="video-tab-content" id="notes">
+<p style="font-size:13px;color:var(--text-muted);margin-bottom:var(--space-3)">记录你的学习笔记，内容会自动保存。</p>
+<textarea class="notes-area" placeholder="在此输入笔记...例如：肾脏皮质厚度正常值2-3mm，注意与髓质区分..."></textarea>
+<button class="notes-save">保存笔记</button>
+</div>
+</div>
+</div>
+<aside class="sidebar-right">
+<div class="sidebar-header"><span class="sidebar-title">课程章节</span><span style="font-size:12px;color:var(--text-muted)">12/12章</span></div>
+<div class="sidebar-body">
+<div class="chapter-nav-item done"><div class="chapter-nav-num">✓</div><div class="chapter-nav-info"><div class="chapter-nav-title">第1章 超声基础理论</div><div class="chapter-nav-time">45:30 · 已完成</div></div></div>
+<div class="chapter-nav-item done"><div class="chapter-nav-num">✓</div><div class="chapter-nav-info"><div class="chapter-nav-title">第2章 肝脏扫查方法</div><div class="chapter-nav-time">52:15 · 已完成</div></div></div>
+<div class="chapter-nav-item active"><div class="chapter-nav-num">3</div><div class="chapter-nav-info"><div class="chapter-nav-title">第3章 肾脏扫查与病变</div><div class="chapter-nav-time">48:40 · 进行中</div></div></div>
+<div class="chapter-nav-item"><div class="chapter-nav-num">4</div><div class="chapter-nav-info"><div class="chapter-nav-title">第4章 脾脏与淋巴结</div><div class="chapter-nav-time">41:20 · 未开始</div></div></div>
+<div class="chapter-nav-item"><div class="chapter-nav-num">5</div><div class="chapter-nav-info"><div class="chapter-nav-title">第5章 膀胱与泌尿系统</div><div class="chapter-nav-time">55:10 · 未开始</div></div></div>
+<div class="chapter-nav-item"><div class="chapter-nav-num">6</div><div class="chapter-nav-info"><div class="chapter-nav-title">第6章 胃肠道扫查技术</div><div class="chapter-nav-time">50:45 · 未开始</div></div></div>
+<div class="chapter-nav-item"><div class="chapter-nav-num">7</div><div class="chapter-nav-info"><div class="chapter-nav-title">第7章 胰腺与肾上腺</div><div class="chapter-nav-time">43:15 · 未开始</div></div></div>
+<div class="chapter-nav-item"><div class="chapter-nav-num">8</div><div class="chapter-nav-info"><div class="chapter-nav-title">第8章 腹膜与肠系膜</div><div class="chapter-nav-time">38:50 · 未开始</div></div></div>
+<div class="chapter-nav-item"><div class="chapter-nav-num">9</div><div class="chapter-nav-info"><div class="chapter-nav-title">第9章 实战病例分析(I)</div><div class="chapter-nav-time">60:00 · 未开始</div></div></div>
+<div class="chapter-nav-item"><div class="chapter-nav-num">10</div><div class="chapter-nav-info"><div class="chapter-nav-title">第10章 实战病例分析(II)</div><div class="chapter-nav-time">60:00 · 未开始</div></div></div>
+<div class="chapter-nav-item"><div class="chapter-nav-num">11</div><div class="chapter-nav-info"><div class="chapter-nav-title">第11章 超声报告书写</div><div class="chapter-nav-time">35:20 · 未开始</div></div></div>
+<div class="chapter-nav-item"><div class="chapter-nav-num">12</div><div class="chapter-nav-info"><div class="chapter-nav-title">第12章 综合测试与答疑</div><div class="chapter-nav-time">40:00 · 未开始</div></div></div>
+</div>
+</aside>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+document.querySelectorAll('.video-tab').forEach(function(tab){tab.addEventListener('click',function(){document.querySelectorAll('.video-tab').forEach(function(t){t.classList.remove('active')});document.querySelectorAll('.video-tab-content').forEach(function(c){c.classList.remove('active')});this.classList.add('active');document.getElementById(this.dataset.tab).classList.add('active')})})});
+</script>
+
+<!-- Mobile Menu -->
+<div class="mobile-overlay" id="mobileOverlay" onclick="e=>e.target===mobileOverlay&&toggleMobileMenu()">
+  <nav class="mobile-nav">
+    <a href="index.html" onclick="toggleMobileMenu()">首页</a>
+    <a href="courses.html" class="active" onclick="toggleMobileMenu()">课程中心</a>
+    <a href="live.html" onclick="toggleMobileMenu()">直播课堂</a>
+    <a href="vip.html" onclick="toggleMobileMenu()">会员中心</a>
+    <a href="about.html" onclick="toggleMobileMenu()">关于我们</a>
+    <div class="mobile-nav-actions">
+      <button class="btn-ghost" style="background:var(--bg-surface);border:1px solid var(--border);color:var(--text-primary)" onclick="showAuth('登录')">登录</button>
+      <button class="btn-primary" onclick="showAuth('注册')">立即注册</button>
+    </div>
+  </nav>
+</div>
+
+</body>
+</html>
